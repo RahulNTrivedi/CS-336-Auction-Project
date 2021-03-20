@@ -8,13 +8,13 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login Page</title>
+		<title>CS336 Auction Login Page</title>
 		<link rel="stylesheet" href="register.css">
 	</head>
 	
 	<body>
 
-		<h1>CS336 Log-in/Register</h1> <!-- the usual HTML way -->
+		<h1>CS336 Auction Register</h1> <!-- the usual HTML way -->
 	
 		 <!-- Show html form to i) display something, ii) choose an action via a 
 		  | radio button -->
@@ -33,8 +33,8 @@
 				<input 
 					type="text" 
 					name="username"
-					pattern="[a-zA-Z][A-Za-z0-9]{1,20}" 
-					title="Only letters and numbers. Must start with a letter. Size 1 to 20 characters"
+					pattern="[a-zA-Z][A-Za-z0-9]{1,45}" 
+					title="Only letters and numbers. Must start with a letter. Size 1 to 45 characters"
 					required = "required">
 			</td>
 		</tr>
@@ -46,8 +46,9 @@
 				<input 
 					type="text" 
 					name="password"
-					pattern="[a-zA-Z][a-zA-Z0-9-_.]{1,20}" 
-					title="Only letters, numbers, hyphens, underscores, and periods. Must start with a letter. Size 1 to 20 characters"
+					pattern="[a-zA-Z][a-zA-Z0-9-_.]{1,45}" 
+					maxLength="45"
+					title="Only letters, numbers, hyphens, underscores, and periods. Must start with a letter. Size 1 to 45 characters"
 					required = "required">
 			</td>
 		</tr>
@@ -59,7 +60,8 @@
 				<input 
 					type="text" 
 					name="email"
-					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{0,}$" 
+					pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{0,45}$" 
+					maxLength="45"
 					title="email@website.extension">
 			</td>
 		</tr>
@@ -71,7 +73,8 @@
 				<input 
 					type="text" 
 					name="phone"
-					pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+					pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+					maxLength="15" 
 					title="111-111-1111">
 			</td>
 		</tr>
@@ -84,8 +87,9 @@
 					type="text" 
 					name="address"
 					placeholder = "Street"
-					pattern = "[a-zA-z0-9]{0,}"
-					title = "Only letters"> 
+					pattern = "[a-zA-z0-9 ]{0,33}"
+					maxLength="33"
+					title = "Only letters and numbers. Max length 33"> 
 			</td>
 		</tr>
 		<tr>
@@ -94,22 +98,25 @@
 					type="text" 
 					name="city"
 					placeholder = "City"
-					pattern = "[a-zA-z]{0,}"
-					title = "Only letters">
+					maxLength="33"
+					pattern = "[a-zA-z ]{0,33}"
+					title = "Only letters. Max length 33">
 			</td>
 			<td>
 				<input 
 					type="text" 
 					name="state"
 					placeholder = "State"
-					pattern = "[a-zA-z]{0,}"
-					title = "Only letters">
+					maxLength="2"
+					pattern = "[a-zA-z ]{2}"
+					title = "Only letters. Use 2 letter abreviation">
 			</td>
 			<td>
 				<input 
 					type="text" 
 					name="zip"
 					placeholder = "Zip"
+					maxLength="5"
 					pattern = "[0-9]{5}"
 					title = "Enter a 5 digit number">
 			</td>
@@ -120,8 +127,9 @@
 					type="text" 
 					name="country" 
 					placeholder = "Country"
-					pattern = "[a-zA-z]{0,}"
-					title = "Only letters">
+					maxLength="33"
+					pattern = "[a-zA-z ]{0,33}"
+					title = "Only letters. Max length 33">
 			</td>
 		</tr>
 		</table>

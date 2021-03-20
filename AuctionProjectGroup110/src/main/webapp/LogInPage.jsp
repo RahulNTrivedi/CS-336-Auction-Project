@@ -8,13 +8,13 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login Page</title>
+		<title>CS336 Auction Login Page</title>
 		<link rel="stylesheet" href="logIn.css">
 	</head>
 	
 	<body>
 
-		<h1>CS336 Log-in/Register</h1> <!-- the usual HTML way -->
+		<h1>CS336 Auction Log-in</h1> <!-- the usual HTML way -->
 	
 		 <!-- Show html form to i) display something, ii) choose an action via a 
 		  | radio button -->

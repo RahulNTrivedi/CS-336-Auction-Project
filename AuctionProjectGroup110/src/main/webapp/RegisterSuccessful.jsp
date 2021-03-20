@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Register</title>
 </head>
 <body>
 	<%
@@ -58,5 +58,6 @@
 		out.print("Insert failed");
 	}
 %>
+	<a href="LogInPage.jsp">Back to Log In</a>
 </body>
 </html>
