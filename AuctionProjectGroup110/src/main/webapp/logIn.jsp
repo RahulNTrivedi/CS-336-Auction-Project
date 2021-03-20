@@ -25,7 +25,7 @@
 		String password = request.getParameter("password");
 
 		//Make an insert statement for the Sells table:
-		String str = "SELECT * FROM account WHERE username == " + username + " AND password == " + password;
+		String str = "SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';";
 		
 		ResultSet result = stmt.executeQuery(str);
 
