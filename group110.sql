@@ -25,14 +25,14 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
-  `Username` varchar(45) NOT NULL,
-  `Address` varchar(45) NOT NULL,
-  `Phone` varchar(45) NOT NULL,
-  `Email` varchar(45) NOT NULL,
-  `Password` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `address` varchar(45) NOT NULL,
   `isAdmin` tinyint NOT NULL DEFAULT '0',
   `isStaff` tinyint NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Username`)
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -42,7 +42,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('admin','102 Admin Street','1232321312','admin@admin.com','admin',1,1);
+INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','102 Admin Street',1,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,14 +54,14 @@ DROP TABLE IF EXISTS `selling_auction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `selling_auction` (
-  `AuctionID` int NOT NULL,
+  `auctionID` int NOT NULL,
   `accountUser` varchar(45) NOT NULL,
-  `Reserve` int NOT NULL,
-  `Winner` varchar(45) DEFAULT NULL,
-  `TypeOfBidding` tinyint NOT NULL,
-  `ClosingDatetime` datetime NOT NULL,
-  `Bids` blob,
-  PRIMARY KEY (`AuctionID`)
+  `reserve` int NOT NULL,
+  `winner` varchar(45) DEFAULT NULL,
+  `typeOfBidding` tinyint NOT NULL,
+  `closingDatetime` datetime NOT NULL,
+  `bids` blob,
+  PRIMARY KEY (`auctionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
