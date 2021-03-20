@@ -28,11 +28,64 @@
 		String str = "SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';";
 		
 		ResultSet result = stmt.executeQuery(str);
+		if(result.next() == false){
+			out.print("Failed Login");
+		} else {
+			out.print("<table>");
+
+			//make a row
+			out.print("<tr>");
+			//make a column
+			out.print("<td>");
+			//print out column header
+			out.print("Username");
+			out.print("</td>");
+			//make a column
+			out.print("<td>");
+			out.print("Email");
+			out.print("</td>");
+			//make a column
+			out.print("<td>");
+			out.print("Phone");
+			out.print("</td>");
+			out.print("<td>");
+			out.print("Address");
+			out.print("</td>");
+			out.print("</tr>");
+
+			//parse out the results
+			do {
+				//make a row
+				out.print("<tr>");
+				//make a column
+				out.print("<td>");
+				//Print out current bar name:
+				out.print(result.getString("username"));
+				out.print("</td>");
+				out.print("<td>");
+				//Print out current beer name:
+				out.print(result.getString("email"));
+				out.print("</td>");
+				out.print("<td>");
+				//Print out current price
+				out.print(result.getString("phone"));
+				out.print("</td>");
+				out.print("<td>");
+				//Print out current price
+				out.print(result.getString("address"));
+				out.print("</td>");
+				out.print("</tr>");
+
+			} while (result.next());
+			out.print("</table>");
+			out.print("Log In Succeeded");
+		}
+
 
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 
-		out.print("Log In Succeeded");
+		
 		
 	} catch (Exception ex) {
 		out.print(ex);

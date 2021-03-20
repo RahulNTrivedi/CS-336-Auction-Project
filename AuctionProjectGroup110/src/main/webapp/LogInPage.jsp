@@ -29,13 +29,13 @@
 					<td>Username</td>
 				</tr>
 				<tr>    
-					<td><input type="text" name="username"></td>
+					<td><input type="text" name="username" required = "required"></td>
 				</tr>				
 				<tr>
 					<td>Password</td>
 				</tr>
 				<tr>
-					<td><input type="text" name="password"></td>
+					<td><input type="text" name="password" required = "required"></td>
 				</tr>
 			</table>
 			<input type="submit" value="Submit">
