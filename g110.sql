@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `cs336project` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `cs336project`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cs336project
@@ -43,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','102 Admin Street',1,1,0,0,NULL);
+INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','102 Admin Street',1,1,0,0,NULL),('custrep','custrep','custrep@custrep.com','2132132132','123 csdf dfsf',0,1,0,0,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,10 +141,11 @@ DROP TABLE IF EXISTS `create`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `create` (
-  `accountuserid` int NOT NULL,
+  `accountuserid` varchar(45) NOT NULL,
   `auctionid` int NOT NULL,
   `reserveAmount` int DEFAULT NULL,
-  PRIMARY KEY (`accountuserid`,`auctionid`)
+  PRIMARY KEY (`accountuserid`,`auctionid`),
+  CONSTRAINT `accID` FOREIGN KEY (`accountuserid`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -163,11 +166,14 @@ DROP TABLE IF EXISTS `doesqa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `doesqa` (
-  `endUsername` int NOT NULL,
-  `repUsername` int NOT NULL,
+  `endUsername` varchar(45) NOT NULL,
+  `repUsername` varchar(45) NOT NULL,
   `replies` blob,
   `questionDetails` blob NOT NULL,
-  PRIMARY KEY (`endUsername`,`repUsername`)
+  PRIMARY KEY (`endUsername`,`repUsername`),
+  KEY `repUser_idx` (`repUsername`),
+  CONSTRAINT `endUser` FOREIGN KEY (`endUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `repUser` FOREIGN KEY (`repUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -191,9 +197,6 @@ CREATE TABLE `generatesreport` (
   `type` varchar(45) NOT NULL,
   `datetime` datetime NOT NULL,
   `adminUsername` varchar(45) NOT NULL,
-  `itemID` blob NOT NULL,
-  `auctionID` blob NOT NULL,
-  `username` blob NOT NULL,
   PRIMARY KEY (`type`,`datetime`),
   KEY `auser_idx` (`adminUsername`),
   CONSTRAINT `auser` FOREIGN KEY (`adminUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -336,4 +339,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-20 18:42:42
+-- Dump completed on 2021-03-20 19:17:11
