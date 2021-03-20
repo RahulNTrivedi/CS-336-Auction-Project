@@ -24,12 +24,14 @@
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-		//Make an insert statement for the Sells table:
+		//Make a search query from account table:
 		String str = "SELECT * FROM account WHERE username = '" + username + "' AND password = '" + password + "';";
 		
 		ResultSet result = stmt.executeQuery(str);
 		if(result.next() == false){
 			out.print("Failed Login");
+			out.print("<br>");
+			out.print("<a href=\"LogInPage.jsp\">Back to Log In</a>");
 		} else {
 			out.print("<table>");
 
@@ -59,24 +61,25 @@
 				out.print("<tr>");
 				//make a column
 				out.print("<td>");
-				//Print out current bar name:
+				//Print out current username:
 				out.print(result.getString("username"));
 				out.print("</td>");
 				out.print("<td>");
-				//Print out current beer name:
+				//Print out current email:
 				out.print(result.getString("email"));
 				out.print("</td>");
 				out.print("<td>");
-				//Print out current price
+				//Print out current phone
 				out.print(result.getString("phone"));
 				out.print("</td>");
 				out.print("<td>");
-				//Print out current price
+				//Print out current address
 				out.print(result.getString("address"));
 				out.print("</td>");
 				out.print("</tr>");
 
 			} while (result.next());
+			
 			out.print("</table>");
 			out.print("Log In Succeeded");
 		}
