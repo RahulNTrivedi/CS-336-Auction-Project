@@ -20,7 +20,7 @@
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
 
-		//Get parameters from the HTML form at the HelloWorld.jsp
+		//Get parameters from the HTML form at the RegisterPage.jsp
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
@@ -33,7 +33,7 @@
 		String address = street + ", " + city + ", " + state + ", " + zip + ", " + country;
 
 
-		//Make an insert statement for the Sells table:
+		//Make an insert statement for the account table:
 		String insert = "INSERT INTO account(username, password, email, phone, address)"
 				+ "VALUES (?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
