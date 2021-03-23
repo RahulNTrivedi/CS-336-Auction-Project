@@ -48,8 +48,6 @@
 				rd.forward(request, response);
 				response.sendRedirect("UserPage.jsp");
 			}
-
-
 		}
 
 

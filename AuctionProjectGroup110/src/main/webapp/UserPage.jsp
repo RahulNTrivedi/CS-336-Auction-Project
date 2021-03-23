@@ -75,8 +75,7 @@
 			} 
 			
 			out.print("</table>");
-			out.print("Log In Succeeded");
-
+			out.print("<a href=\"LogInPage.jsp\">Log Out</a>");
 
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
