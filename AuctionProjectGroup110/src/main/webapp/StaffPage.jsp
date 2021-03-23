@@ -74,10 +74,6 @@
 				//Print out current address
 				out.print(result.getString("isAdmin"));
 				out.print("</td>");
-				out.print("<td>");
-				//Print out current address
-				out.print(result.getString("isStaff"));
-				out.print("</td>");
 				out.print("</tr>");
 
 			} 
