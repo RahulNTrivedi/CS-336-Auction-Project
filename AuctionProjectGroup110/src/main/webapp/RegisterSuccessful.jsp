@@ -30,7 +30,11 @@
 		String state = request.getParameter("state");
 		String zip = request.getParameter("zip");
 		String country = request.getParameter("country");
-		String address = street + ", " + city + ", " + state + ", " + zip + ", " + country;
+		String address = street;
+		if(!city.equals("")) address += ", " + city;
+		if(!state.equals("")) address += ", " + state;
+		if(!zip.equals("")) address += ", " + zip;
+		if(!country.equals("")) address += ", " + country;
 
 
 		//Make an insert statement for the account table:

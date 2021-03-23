@@ -23,7 +23,7 @@
 			However, when GET is used, the submitted form data will be visible in the page address field-->
 	
 	<h2>Log In:</h2>
-		<form method="get" action="LogInSuccess.jsp">
+		<form method="get" action="LogInValidate.jsp">
 			<table>
 				<tr>    
 					<td>Username</td>

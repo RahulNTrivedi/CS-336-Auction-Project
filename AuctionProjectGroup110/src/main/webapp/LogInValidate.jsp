@@ -33,55 +33,23 @@
 			out.print("<br>");
 			out.print("<a href=\"LogInPage.jsp\">Back to Log In</a>");
 		} else {
-			out.print("<table>");
-
-			//make a row
-			out.print("<tr>");
-			//make a column
-			out.print("<td>");
-			//print out column header
-			out.print("Username");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("Email");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("Phone");
-			out.print("</td>");
-			out.print("<td>");
-			out.print("Address");
-			out.print("</td>");
-			out.print("</tr>");
-
-			//parse out the results
-			do {
-				//make a row
-				out.print("<tr>");
-				//make a column
-				out.print("<td>");
-				//Print out current username:
-				out.print(result.getString("username"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current email:
-				out.print(result.getString("email"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current phone
-				out.print(result.getString("phone"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current address
-				out.print(result.getString("address"));
-				out.print("</td>");
-				out.print("</tr>");
-
-			} while (result.next());
+			request.setAttribute("query", str);
 			
-			out.print("</table>");
-			out.print("Log In Succeeded");
+			if(result.getString("isAdmin").equals("1")){
+				RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");
+				rd.forward(request, response);
+				response.sendRedirect("AdminPage.jsp");
+			} else if(result.getString("isStaff").equals("1")){
+				RequestDispatcher rd = request.getRequestDispatcher("StaffPage.jsp");
+				rd.forward(request, response);
+				response.sendRedirect("StaffPage.jsp");
+			} else {
+				RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
+				rd.forward(request, response);
+				response.sendRedirect("UserPage.jsp");
+			}
+
+
 		}
 
 
