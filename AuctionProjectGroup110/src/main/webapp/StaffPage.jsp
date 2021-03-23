@@ -70,10 +70,6 @@
 				//Print out current address
 				out.print(result.getString("address"));
 				out.print("</td>");
-				out.print("<td>");
-				//Print out current address
-				out.print(result.getString("isAdmin"));
-				out.print("</td>");
 				out.print("</tr>");
 
 			} 
