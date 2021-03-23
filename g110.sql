@@ -32,8 +32,8 @@ CREATE TABLE `account` (
   `address` varchar(100) NOT NULL,
   `isAdmin` tinyint NOT NULL DEFAULT '0',
   `isStaff` tinyint NOT NULL DEFAULT '0',
-  `isBuyer` tinyint NOT NULL,
-  `isSeller` tinyint NOT NULL,
+  `isBuyer` tinyint NOT NULL DEFAULT '0',
+  `isSeller` tinyint NOT NULL DEFAULT '0',
   `itemsOfInterest` blob,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -333,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-23 16:25:14
+-- Dump completed on 2021-03-23 16:59:25
