@@ -188,31 +188,6 @@ LOCK TABLES `doesqa` WRITE;
 /*!40000 ALTER TABLE `doesqa` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `generatesreport`
---
-
-DROP TABLE IF EXISTS `generatesreport`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `generatesreport` (
-  `type` varchar(45) NOT NULL,
-  `datetime` datetime NOT NULL,
-  `adminUsername` varchar(45) NOT NULL,
-  PRIMARY KEY (`type`,`datetime`),
-  KEY `auser_idx` (`adminUsername`),
-  CONSTRAINT `auser` FOREIGN KEY (`adminUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `generatesreport`
---
-
-LOCK TABLES `generatesreport` WRITE;
-/*!40000 ALTER TABLE `generatesreport` DISABLE KEYS */;
-/*!40000 ALTER TABLE `generatesreport` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `hasa_schoolsupplies`
