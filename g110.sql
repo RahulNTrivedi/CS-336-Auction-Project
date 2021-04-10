@@ -188,14 +188,6 @@ LOCK TABLES `doesqa` WRITE;
 /*!40000 ALTER TABLE `doesqa` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `generatesreport`
---
-
-LOCK TABLES `generatesreport` WRITE;
-/*!40000 ALTER TABLE `generatesreport` DISABLE KEYS */;
-/*!40000 ALTER TABLE `generatesreport` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `hasa_schoolsupplies`
