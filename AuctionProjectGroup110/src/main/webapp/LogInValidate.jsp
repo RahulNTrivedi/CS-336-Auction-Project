@@ -34,6 +34,7 @@
 			out.print("<a href=\"LogInPage.jsp\">Back to Log In</a>");
 		} else {
 			request.setAttribute("query", str);
+			session.setAttribute("user", username);
 			
 			if(result.getString("isAdmin").equals("1")){
 				RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");

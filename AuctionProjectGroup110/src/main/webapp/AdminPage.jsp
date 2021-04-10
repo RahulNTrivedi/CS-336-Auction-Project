@@ -11,81 +11,91 @@
 </head>
 <body>
 	<%
-	try {
-		out.print("<h1>Welcome admin</h1>");
-		out.print("<br>");
-
-		//Get the database connection
-		ApplicationDB db = new ApplicationDB();	
-		Connection con = db.getConnection();
-
-		//Create a SQL statement
-		Statement stmt = con.createStatement();
-		
-		//Make a search query from account table:
-			String str =  (String)request.getAttribute("query");
-
-			ResultSet result = stmt.executeQuery(str);
+	if ((session.getAttribute("user") == null)) {
+	%>
+	You are not logged in<br/>
+	<a href="LogInPage.jsp">Please Login</a>
+	<%} else {
+	%>
+	Welcome admin, <%=session.getAttribute("user")%>
+	
+	<%
+		try {
+	
+			//Get the database connection
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();
+	
+			//Create a SQL statement
+			Statement stmt = con.createStatement();
 			
-			out.print("<table>");
-
-			//make a row
-			out.print("<tr>");
-			//make a column
-			out.print("<td>");
-			//print out column header
-			out.print("Username");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("Email");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("Phone");
-			out.print("</td>");
-			out.print("<td>");
-			out.print("Address");
-			out.print("</td>");
-			out.print("</tr>");
-
-			//parse out the results
-			while (result.next()) {
+			//Make a search query from account table:
+				String str =  (String)request.getAttribute("query");
+	
+				ResultSet result = stmt.executeQuery(str);
+				
+				out.print("<table>");
+	
 				//make a row
 				out.print("<tr>");
 				//make a column
 				out.print("<td>");
-				//Print out current username:
-				out.print(result.getString("username"));
+				//print out column header
+				out.print("Username");
+				out.print("</td>");
+				//make a column
+				out.print("<td>");
+				out.print("Email");
+				out.print("</td>");
+				//make a column
+				out.print("<td>");
+				out.print("Phone");
 				out.print("</td>");
 				out.print("<td>");
-				//Print out current email:
-				out.print(result.getString("email"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current phone
-				out.print(result.getString("phone"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current address
-				out.print(result.getString("address"));
+				out.print("Address");
 				out.print("</td>");
 				out.print("</tr>");
-
-			} 
+	
+				//parse out the results
+				while (result.next()) {
+					//make a row
+					out.print("<tr>");
+					//make a column
+					out.print("<td>");
+					//Print out current username:
+					out.print(result.getString("username"));
+					out.print("</td>");
+					out.print("<td>");
+					//Print out current email:
+					out.print(result.getString("email"));
+					out.print("</td>");
+					out.print("<td>");
+					//Print out current phone
+					out.print(result.getString("phone"));
+					out.print("</td>");
+					out.print("<td>");
+					//Print out current address
+					out.print(result.getString("address"));
+					out.print("</td>");
+					out.print("</tr>");
+	
+				} 
+				
+				out.print("</table>");
+				out.print("<a href=\"LogOut.jsp\">Log Out</a>");
+	
+			//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
+			con.close();
+	
 			
-			out.print("</table>");
-			out.print("<a href=\"LogInPage.jsp\">Log Out</a>");
+			
+		} catch (Exception ex) {
+			out.print(ex);
+			out.print("Failed");
+		}
+    }
+	%>
 
-		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
-		con.close();
 
-		
-		
-	} catch (Exception ex) {
-		out.print(ex);
-		out.print("Failed");
-	}
-%>
 </body>
 </html>
