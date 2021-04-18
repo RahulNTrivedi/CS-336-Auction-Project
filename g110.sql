@@ -111,7 +111,6 @@ CREATE TABLE `auction` (
   `accountUser` varchar(45) NOT NULL,
   `reserve` int NOT NULL,
   `winner` varchar(45) DEFAULT NULL,
-  `typeOfBidding` varchar(45) NOT NULL,
   `closingDatetime` datetime NOT NULL,
   `maxBid` int NOT NULL,
   PRIMARY KEY (`auctionID`),
@@ -220,7 +219,7 @@ DROP TABLE IF EXISTS `hasa_schoolsupply`;
 CREATE TABLE `hasa_schoolsupply` (
   `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
-  `condition` tinyint DEFAULT NULL,
+  `condition` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`itemtype`,`auctionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -272,9 +271,10 @@ DROP TABLE IF EXISTS `makesbid`;
 CREATE TABLE `makesbid` (
   `bidID` int NOT NULL,
   `accountUser` varchar(45) NOT NULL,
-  `increment` int NOT NULL,
+  `typeOfBidding` varchar(45) NOT NULL,
   `amount` int NOT NULL,
-  `upperLimit` int NOT NULL,
+  `increment` int DEFAULT NULL,
+  `upperLimit` int DEFAULT NULL,
   PRIMARY KEY (`bidID`),
   KEY `accountUser_idx` (`accountUser`),
   CONSTRAINT `account_User` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
