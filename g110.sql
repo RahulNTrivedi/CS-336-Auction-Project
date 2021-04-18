@@ -1,4 +1,3 @@
--- drop database cs336project;
 CREATE DATABASE IF NOT EXISTS `cs336project` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `cs336project`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
@@ -45,7 +44,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','102 Admin Street',1,1,0,0,NULL),('custrep','custrep','custrep@custrep.com','2132132132','123 csdf dfsf',0,1,0,0,NULL);
+INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','102 Admin Street',1,1,0,0),('custrep','custrep','custrep@custrep.com','2132132132','123 csdf dfsf',0,1,0,0);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +56,7 @@ DROP TABLE IF EXISTS `alerts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alerts` (
-  `alertMsg` varchar(25) NOT NULL,
+  `alertMsg` varchar(250) NOT NULL,
   `alertUsername` varchar(45) NOT NULL,
   PRIMARY KEY (`alertMsg`, `alertUsername`),
   KEY `alertUser_idx` (`alertUsername`),
@@ -69,10 +68,35 @@ CREATE TABLE `alerts` (
 -- Dumping data for table `alerts`
 --
 
-
 LOCK TABLES `alerts` WRITE;
 /*!40000 ALTER TABLE `alerts` DISABLE KEYS */;
 /*!40000 ALTER TABLE `alerts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asksQuestion`
+--
+
+DROP TABLE IF EXISTS `asksQuestion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `asksQuestion` (
+  `questionID` int NOT NULL,
+  `endUsername` varchar(45) NOT NULL,
+  `questionDetails` varchar(1000) NOT NULL,
+  PRIMARY KEY (`questionID`),
+  KEY `endUser_idx` (`endUsername`),
+  CONSTRAINT `endUser` FOREIGN KEY (`endUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asksQuestion`
+--
+
+LOCK TABLES `asksQuestion` WRITE;
+/*!40000 ALTER TABLE `asksQuestion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asksQuestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -89,7 +113,7 @@ CREATE TABLE `auction` (
   `winner` varchar(45) DEFAULT NULL,
   `typeOfBidding` varchar(45) NOT NULL,
   `closingDatetime` datetime NOT NULL,
-  `bids` blob,
+  `maxBid` int NOT NULL,
   PRIMARY KEY (`auctionID`),
   KEY `accountUser__idx` (`accountUser`),
   CONSTRAINT `accountUser_` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -187,35 +211,6 @@ LOCK TABLES `create` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `doesqa`
---
-
-DROP TABLE IF EXISTS `doesqa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `doesqa` (
-  `endUsername` varchar(45) NOT NULL,
-  `repUsername` varchar(45) NOT NULL,
-  `replies` blob,
-  `questionDetails` blob NOT NULL,
-  PRIMARY KEY (`endUsername`,`repUsername`),
-  KEY `repUser_idx` (`repUsername`),
-  CONSTRAINT `endUser` FOREIGN KEY (`endUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `repUser` FOREIGN KEY (`repUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `doesqa`
---
-
-LOCK TABLES `doesqa` WRITE;
-/*!40000 ALTER TABLE `doesqa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `doesqa` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
 -- Table structure for table `hasa_schoolsupply`
 --
 
@@ -223,8 +218,8 @@ DROP TABLE IF EXISTS `hasa_schoolsupply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hasa_schoolsupply` (
-  `itemtype` varchar(45) NOT NULL,
-  `auctionid` int NOT NULL,
+  `itemType` varchar(45) NOT NULL,
+  `auctionID` int NOT NULL,
   `condition` tinyint DEFAULT NULL,
   PRIMARY KEY (`itemtype`,`auctionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -350,8 +345,37 @@ LOCK TABLES `textbook` WRITE;
 /*!40000 ALTER TABLE `textbook` DISABLE KEYS */;
 /*!40000 ALTER TABLE `textbook` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+--
+-- Table structure for table `writesReplies`
+--
+
+DROP TABLE IF EXISTS `writesReplies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `writesReplies` (
+  `replyID` int NOT NULL,
+  `repUsername` varchar(45) NOT NULL,
+  `questionID` int NOT NULL,
+  `replyDetails` varchar(1000) NOT NULL,
+  PRIMARY KEY (`replyID`),
+  KEY `repUser_idx` (`repUsername`),
+  CONSTRAINT `repUser` FOREIGN KEY (`repUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_questionID` FOREIGN KEY (`questionID`) REFERENCES `asksQuestion` (`questionID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `writesReplies`
+--
+
+LOCK TABLES `writesReplies` WRITE;
+/*!40000 ALTER TABLE `writesReplies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `writesReplies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
