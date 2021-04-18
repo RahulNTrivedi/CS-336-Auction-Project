@@ -74,13 +74,13 @@ LOCK TABLES `alerts` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `asksQuestion`
+-- Table structure for table `asksquestion`
 --
 
-DROP TABLE IF EXISTS `asksQuestion`;
+DROP TABLE IF EXISTS `asksquestion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asksQuestion` (
+CREATE TABLE `asksquestion` (
   `questionID` int NOT NULL,
   `endUsername` varchar(45) NOT NULL,
   `questionDetails` varchar(1000) NOT NULL,
@@ -91,12 +91,12 @@ CREATE TABLE `asksQuestion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `asksQuestion`
+-- Dumping data for table `asksquestion`
 --
 
-LOCK TABLES `asksQuestion` WRITE;
-/*!40000 ALTER TABLE `asksQuestion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asksQuestion` ENABLE KEYS */;
+LOCK TABLES `asksquestion` WRITE;
+/*!40000 ALTER TABLE `asksquestion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asksquestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -184,13 +184,13 @@ LOCK TABLES `calculator` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `create`
+-- Table structure for table `createauction`
 --
 
-DROP TABLE IF EXISTS `createAuction`;
+DROP TABLE IF EXISTS `createauction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `createAuction` (
+CREATE TABLE `createauction` (
   `accountuserID` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
   `reserveAmount` int DEFAULT NULL,
@@ -202,12 +202,12 @@ CREATE TABLE `createAuction` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `createAuction`
+-- Dumping data for table `createauction`
 --
 
-LOCK TABLES `createAuction` WRITE;
-/*!40000 ALTER TABLE `createAuction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `createAuction` ENABLE KEYS */;
+LOCK TABLES `createauction` WRITE;
+/*!40000 ALTER TABLE `createauction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `createauction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,13 +235,13 @@ LOCK TABLES `hasa_schoolsupply` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `itemsOfInterest`
+-- Table structure for table `itemsofinterest`
 --
 
-DROP TABLE IF EXISTS `itemsOfInterest`;
+DROP TABLE IF EXISTS `itemsofinterest`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `itemsOfInterest` (
+CREATE TABLE `itemsofinterest` (
   `itemType` varchar(45) NOT NULL,
   `interestUsername` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL DEFAULT '',
@@ -254,12 +254,12 @@ CREATE TABLE `itemsOfInterest` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `itemsOfInterest`
+-- Dumping data for table `itemsofinterest`
 --
 
-LOCK TABLES `itemsOfInterest` WRITE;
-/*!40000 ALTER TABLE `itemsOfInterest` DISABLE KEYS */;
-/*!40000 ALTER TABLE `itemsOfInterest` ENABLE KEYS */;
+LOCK TABLES `itemsofinterest` WRITE;
+/*!40000 ALTER TABLE `itemsofinterest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemsofinterest` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -347,13 +347,13 @@ LOCK TABLES `textbook` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `writesReplies`
+-- Table structure for table `writereplies`
 --
 
-DROP TABLE IF EXISTS `writesReplies`;
+DROP TABLE IF EXISTS `writereplies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `writesReplies` (
+CREATE TABLE `writereplies` (
   `replyID` int NOT NULL,
   `repUsername` varchar(45) NOT NULL,
   `questionID` int NOT NULL,
@@ -366,12 +366,12 @@ CREATE TABLE `writesReplies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `writesReplies`
+-- Dumping data for table `writereplies`
 --
 
-LOCK TABLES `writesReplies` WRITE;
-/*!40000 ALTER TABLE `writesReplies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `writesReplies` ENABLE KEYS */;
+LOCK TABLES `writereplies` WRITE;
+/*!40000 ALTER TABLE `writereplies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `writereplies` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
