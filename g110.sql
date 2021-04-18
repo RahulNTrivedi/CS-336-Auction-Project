@@ -35,7 +35,6 @@ CREATE TABLE `account` (
   `isStaff` tinyint NOT NULL DEFAULT '0',
   `isBuyer` tinyint NOT NULL DEFAULT '0',
   `isSeller` tinyint NOT NULL DEFAULT '0',
-  `itemsOfInterest` blob,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
