@@ -1,4 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `cs336project` /*!40100 DEFAULT CHARACTER SET latin1 */;
+-- drop database cs336project;
+CREATE DATABASE IF NOT EXISTS `cs336project` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `cs336project`;
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
@@ -50,6 +51,32 @@ INSERT INTO `account` VALUES ('admin','admin','admin@admin.com','1232321312','10
 UNLOCK TABLES;
 
 --
+-- Table structure for table `alerts`
+--
+
+DROP TABLE IF EXISTS `alerts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `alerts` (
+  `alertMsg` varchar(25) NOT NULL,
+  `alertUsername` varchar(45) NOT NULL,
+  PRIMARY KEY (`alertMsg`, `alertUsername`),
+  KEY `alertUser_idx` (`alertUsername`),
+  CONSTRAINT `alertUser` FOREIGN KEY (`alertUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alerts`
+--
+
+
+LOCK TABLES `alerts` WRITE;
+/*!40000 ALTER TABLE `alerts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alerts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auction`
 --
 
@@ -71,7 +98,7 @@ CREATE TABLE `auction` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auction`
+-- Dumping data fi or table `auction`
 --
 
 LOCK TABLES `auction` WRITE;
@@ -113,12 +140,12 @@ DROP TABLE IF EXISTS `calculator`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `calculator` (
-  `itemID` int NOT NULL,
+  `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
   `condition` varchar(45) NOT NULL,
   `brand` varchar(45) NOT NULL,
   `model` varchar(45) NOT NULL,
-  PRIMARY KEY (`itemID`,`auctionID`),
+  PRIMARY KEY (`itemType`,`auctionID`),
   KEY `auctID_idx` (`auctionID`),
   CONSTRAINT `auctID` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -190,27 +217,55 @@ UNLOCK TABLES;
 
 
 --
--- Table structure for table `hasa_schoolsupplies`
+-- Table structure for table `hasa_schoolsupply`
 --
 
-DROP TABLE IF EXISTS `hasa_schoolsupplies`;
+DROP TABLE IF EXISTS `hasa_schoolsupply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hasa_schoolsupplies` (
-  `itemid` int NOT NULL,
+CREATE TABLE `hasa_schoolsupply` (
+  `itemtype` varchar(45) NOT NULL,
   `auctionid` int NOT NULL,
   `condition` tinyint DEFAULT NULL,
-  PRIMARY KEY (`itemid`,`auctionid`)
+  PRIMARY KEY (`itemtype`,`auctionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hasa_schoolsupplies`
+-- Dumping data for table `hasa_schoolsupply`
 --
 
-LOCK TABLES `hasa_schoolsupplies` WRITE;
-/*!40000 ALTER TABLE `hasa_schoolsupplies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hasa_schoolsupplies` ENABLE KEYS */;
+LOCK TABLES `hasa_schoolsupply` WRITE;
+/*!40000 ALTER TABLE `hasa_schoolsupply` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hasa_schoolsupply` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itemsOfInterest`
+--
+
+DROP TABLE IF EXISTS `itemsOfInterest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `itemsOfInterest` (
+  `itemType` varchar(45) NOT NULL,
+  `interestUsername` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `title` varchar(45) NOT NULL DEFAULT '',
+  `model` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`itemType`, `interestUsername`),
+  KEY `interestUser_idx` (`interestUsername`),
+  CONSTRAINT `interestUser` FOREIGN KEY (`interestUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemsOfInterest`
+--
+
+LOCK TABLES `itemsOfInterest` WRITE;
+/*!40000 ALTER TABLE `itemsOfInterest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemsOfInterest` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -249,13 +304,12 @@ DROP TABLE IF EXISTS `notebook`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notebook` (
-  `itemID` int NOT NULL,
+  `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
-  `condition` tinyint NOT NULL,
+  `condition` varchar(45) NOT NULL,
   `color` varchar(45) NOT NULL,
-  `papertype` varchar(45) NOT NULL,
-  `brand` varchar(45) NOT NULL,
-  PRIMARY KEY (`itemID`,`auctionID`),
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`itemType`,`auctionID`),
   KEY `auctionid__idx` (`auctionID`),
   CONSTRAINT `auctionid_` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -278,13 +332,12 @@ DROP TABLE IF EXISTS `textbook`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `textbook` (
-  `itemID` int NOT NULL,
+  `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
-  `condition` tinyint NOT NULL,
+  `condition` varchar(45) NOT NULL,
   `title` varchar(45) NOT NULL,
   `author` varchar(45) NOT NULL,
-  `issue` varchar(45) NOT NULL,
-  PRIMARY KEY (`itemID`,`auctionID`),
+  PRIMARY KEY (`itemType`,`auctionID`),
   KEY `auc_id_idx` (`auctionID`),
   CONSTRAINT `auc_id` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
