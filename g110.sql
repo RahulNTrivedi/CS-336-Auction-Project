@@ -187,10 +187,10 @@ UNLOCK TABLES;
 -- Table structure for table `create`
 --
 
-DROP TABLE IF EXISTS `create`;
+DROP TABLE IF EXISTS `createAuction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `create` (
+CREATE TABLE `createAuction` (
   `accountuserID` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
   `reserveAmount` int DEFAULT NULL,
@@ -202,12 +202,12 @@ CREATE TABLE `create` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `create`
+-- Dumping data for table `createAuction`
 --
 
-LOCK TABLES `create` WRITE;
-/*!40000 ALTER TABLE `create` DISABLE KEYS */;
-/*!40000 ALTER TABLE `create` ENABLE KEYS */;
+LOCK TABLES `createAuction` WRITE;
+/*!40000 ALTER TABLE `createAuction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `createAuction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
