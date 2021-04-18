@@ -347,13 +347,13 @@ LOCK TABLES `textbook` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `writereplies`
+-- Table structure for table `writesreplies`
 --
 
-DROP TABLE IF EXISTS `writereplies`;
+DROP TABLE IF EXISTS `writesreplies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `writereplies` (
+CREATE TABLE `writesreplies` (
   `replyID` int NOT NULL,
   `repUsername` varchar(45) NOT NULL,
   `questionID` int NOT NULL,
@@ -366,12 +366,12 @@ CREATE TABLE `writereplies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `writereplies`
+-- Dumping data for table `writesreplies`
 --
 
-LOCK TABLES `writereplies` WRITE;
-/*!40000 ALTER TABLE `writereplies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `writereplies` ENABLE KEYS */;
+LOCK TABLES `writesreplies` WRITE;
+/*!40000 ALTER TABLE `writesreplies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `writesreplies` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
