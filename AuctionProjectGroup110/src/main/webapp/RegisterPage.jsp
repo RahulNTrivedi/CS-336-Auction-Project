@@ -133,7 +133,7 @@
 			</td>
 		</tr>
 		</table>
-		<input type="submit" value="Add me!">
+		<input type="submit" value="Register">
 		</form>
 	<br>
 	<a href="LogInPage.jsp">Already have an account? Log In</a>

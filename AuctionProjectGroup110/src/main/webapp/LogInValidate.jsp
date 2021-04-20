@@ -33,22 +33,8 @@
 			out.print("<br>");
 			out.print("<a href=\"LogInPage.jsp\">Back to Log In</a>");
 		} else {
-			request.setAttribute("query", str);
 			session.setAttribute("user", username);
-			
-			if(result.getString("isAdmin").equals("1")){
-				RequestDispatcher rd = request.getRequestDispatcher("AdminPage.jsp");
-				rd.forward(request, response);
-				response.sendRedirect("AdminPage.jsp");
-			} else if(result.getString("isStaff").equals("1")){
-				RequestDispatcher rd = request.getRequestDispatcher("StaffPage.jsp");
-				rd.forward(request, response);
-				response.sendRedirect("StaffPage.jsp");
-			} else {
-				RequestDispatcher rd = request.getRequestDispatcher("UserPage.jsp");
-				rd.forward(request, response);
-				response.sendRedirect("UserPage.jsp");
-			}
+			response.sendRedirect("MainPage.jsp");
 		}
 
 
