@@ -10,6 +10,68 @@
 <title>Auction Project</title>
 </head>
 <body>
+	<%!
+	public String generateQuery(String items, String searchBy, String searchQuery, String sortBy){
+		String query = "SELECT * FROM auction AS a "
+						+"LEFT OUTER JOIN hasa_schoolsupply AS h "
+						+ "ON a.auctionID = h.auctionID ";
+		if(items!=null){
+			if(items.equals("all")){
+				query+= "LEFT OUTER JOIN calculator AS c " 
+						+ "ON a.auctionID = c.auctionID " 
+						+ "LEFT OUTER JOIN notebook AS n "
+						+ "ON a.auctionID = n.auctionID " 
+						+ "LEFT OUTER JOIN textbook AS t "
+						+ "ON a.auctionID = t.auctionID ";
+			} else if(items.equals("notebooks")){
+				query+= "INNER JOIN notebook AS n "
+						+ "ON a.auctionID = n.auctionID ";
+			} else if(items.equals("calculators")){
+				query+="INNER JOIN calculator AS c " 
+						+ "ON a.auctionID = c.auctionID ";
+			} else if(items.equals("textbooks")){
+				query+= "INNER JOIN textbook AS t "
+						+ "ON a.auctionID = t.auctionID ";
+			}
+			
+			if(sortBy.equals("dateAscending")){
+				query+="ORDER BY a.closingDateTime ASC ";
+			} else if(sortBy.equals("dateDescending")){
+				query+="ORDER BY a.closingDateTime DESC ";
+			} else if(sortBy.equals("priceAscending")){
+				query+="LEFT OUTER JOIN (SELECT auctionID, MAX(amount) AS amt "
+						+ "FROM bidon AS b "
+						+ "INNER JOIN makesbid AS m "
+						+ "ON b.bidID = m.bidID "
+						+ "GROUP BY auctionID) AS p "
+						+ "ON a.auctionID = p.auctionID "
+						+ "ORDER BY p.amt ASC ";
+			} else if(sortBy.equals("priceDescending")){
+				query+="LEFT OUTER JOIN (SELECT auctionID, MAX(amount) AS amt "
+						+ "FROM bidon AS b "
+						+ "INNER JOIN makesbid AS m "
+						+ "ON b.bidID = m.bidID "
+						+ "GROUP BY auctionID) AS p "
+						+ "ON a.auctionID = p.auctionID "
+						+ "ORDER BY p.amt DESC ";
+			} else if(sortBy.equals("conditionAscending")){
+				query+="ORDER BY FIELD(h.condition, 'old', 'used', 'slightly used', 'new') ";
+			} else if(sortBy.equals("conditionDescending")){
+				query+="ORDER BY FIELD(h.condition, 'new', 'slightly used', 'used', 'old') ";	
+			}
+		} else {
+			query+= "LEFT OUTER JOIN calculator AS c " 
+					+ "ON a.auctionID = c.auctionID " 
+					+ "LEFT OUTER JOIN notebook AS n "
+					+ "ON a.auctionID = n.auctionID " 
+					+ "LEFT OUTER JOIN textbook AS t "
+					+ "ON a.auctionID = t.auctionID ";
+		}
+
+		query+=";";
+		return query;
+	}
+	%>
 	<%
 	if ((session.getAttribute("user") == null)) {
 	%>
@@ -39,14 +101,14 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			
-			ResultSet result = stmt.executeQuery("SELECT * FROM account WHERE username = '" + (String)session.getAttribute("user") + "';");
-			result.next();
+			ResultSet setAccount = stmt.executeQuery("SELECT * FROM account WHERE username = '" + (String)session.getAttribute("user") + "';");
+			setAccount.next();
 			//Make a search query from account table:
-			if(result.getString("isAdmin").equals("1")){
+			if(setAccount.getString("isAdmin").equals("1")){
 				out.print("<form action='AdminPage.jsp'>");
 				out.print("<input type='submit' value='Account'/>");
 				out.print("</form>");
-			} else if(result.getString("isStaff").equals("1")){
+			} else if(setAccount.getString("isStaff").equals("1")){
 				out.print("<form action='StaffPage.jsp'>");
 				out.print("<input type='submit' value='Account'/>");
 				out.print("</form>");
@@ -68,9 +130,94 @@
 			out.print("</table>");
 			
 			out.print("<form method=\"get\" action=\"MainPage.jsp\">");
-				out.print("<input type=\"text\" name=\"searchQuery\" placeholder=\"Search\" required = \"required\">");
+				out.print("<select name=\"searchSelect\">");
+					out.print("<option value='all'>All Items</option>");
+					out.print("<option value='textbooks'>Textbooks</option>");
+					out.print("<option value='notebooks'>Notebooks</option>");
+					out.print("<option value='calculators'>Calculators</option>");
+				out.print("</select>");
+				out.print("<select name=\"searchBy\">");
+					out.print("<option value='title'>Title</option>");
+					out.print("<option value='username'>Users</option>");
+				out.print("</select>");
+				out.print("<input type=\"text\" name=\"searchQuery\" placeholder=\"Search\">");
 				out.print("<input type=\"submit\" value=\"Search\">");
+				out.print("<label for='searchSort'>&nbsp;Sort by:</label>");
+				out.print("<select name=\"searchSort\">");
+					out.print("<option value='none'>Not sorted</option>");
+					out.print("<option value='dateAscending'>Closing Date: Soon to Later</option>");
+					out.print("<option value='dateDescending'>Closing Date: Later to Soon</option>");
+					out.print("<option value='priceAscending'>Bid Price: Low to High</option>");
+					out.print("<option value='priceDescending'>Bid Price: High to Low</option>");
+					out.print("<option value='conditionAscending'>Condition: Old to New</option>");
+					out.print("<option value='conditionDescending'>Condition: New to Old</option>");
+			out.print("</select>");
 			out.print("</form>");
+			out.print("<br>");
+			
+			String searchSelect = request.getParameter("searchSelect");
+			String searchBy = request.getParameter("searchBy");
+			String searchQuery = request.getParameter("searchQuery");
+			String searchSort = request.getParameter("searchSort");
+			
+			String generatedQuery = generateQuery(searchSelect, searchBy, searchQuery, searchSort);
+			ResultSet searchedItems = stmt.executeQuery(generatedQuery);
+			
+			out.print("<table>");
+			while(searchedItems.next()){
+				if(searchBy.equals("username") && !searchQuery.equals("")){
+					if(!searchedItems.getString("a.accountUser").toLowerCase().contains(searchQuery.toLowerCase())){
+						continue;
+					}
+				} else if(searchBy.equals("title") && !searchQuery.equals("")){
+					String itemTitle = "";
+					if(searchedItems.getString("h.itemType").equals("textbook")){
+						itemTitle += searchedItems.getString("t.title") + " " + searchedItems.getString("t.author");
+					} else if(searchedItems.getString("h.itemType").equals("notebook")){
+						itemTitle += searchedItems.getString("n.color") + " " + searchedItems.getString("n.name");
+					} else if(searchedItems.getString("h.itemType").equals("calculator")){
+						itemTitle += searchedItems.getString("c.brand") + " " + searchedItems.getString("c.model");
+					}
+					if(!itemTitle.toLowerCase().contains(searchQuery.toLowerCase())){
+						continue;
+					}
+				}
+				out.print("<tr>");
+				out.print("<td>");
+				out.print(searchedItems.getString("a.accountUser"));
+				out.print("</td>");
+				out.print("<td>");
+				out.print(searchedItems.getString("h.itemType"));
+				out.print("</td>");
+				out.print("<td>");
+				out.print(searchedItems.getString("h.condition"));
+				out.print("</td>");
+				out.print("<td>");
+				out.print(searchedItems.getString("a.closingDatetime"));
+				out.print("</td>");
+				if(searchedItems.getString("h.itemType").equals("textbook")){
+					out.print("<td>");
+					out.print(searchedItems.getString("t.title"));
+					out.print("&nbsp;");
+					out.print(searchedItems.getString("t.author"));
+					out.print("</td>");
+				} else if(searchedItems.getString("h.itemType").equals("notebook")){
+					out.print("<td>");
+					out.print(searchedItems.getString("n.color"));
+					out.print("&nbsp;");
+					out.print(searchedItems.getString("n.name"));
+					out.print("</td>");
+				} else if(searchedItems.getString("h.itemType").equals("calculator")){
+					out.print("<td>");
+					out.print(searchedItems.getString("c.brand"));
+					out.print("&nbsp;");
+					out.print(searchedItems.getString("c.model"));
+					out.print("</td>");
+				}
+				out.print("</tr>");
+			}
+			
+			out.print("</table>");
 			//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 			con.close();
 			

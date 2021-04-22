@@ -220,7 +220,7 @@ CREATE TABLE `hasa_schoolsupply` (
   `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
   `condition` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`itemtype`,`auctionid`)
+  PRIMARY KEY (`auctionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
