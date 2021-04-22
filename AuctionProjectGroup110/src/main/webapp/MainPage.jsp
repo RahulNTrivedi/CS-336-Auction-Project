@@ -162,14 +162,13 @@
 			
 			String generatedQuery = generateQuery(searchSelect, searchBy, searchQuery, searchSort);
 			ResultSet searchedItems = stmt.executeQuery(generatedQuery);
-			
 			out.print("<table>");
 			while(searchedItems.next()){
-				if(searchBy.equals("username") && !searchQuery.equals("")){
+				if(searchBy != null && searchBy.equals("username") && !searchQuery.equals("")){
 					if(!searchedItems.getString("a.accountUser").toLowerCase().contains(searchQuery.toLowerCase())){
 						continue;
 					}
-				} else if(searchBy.equals("title") && !searchQuery.equals("")){
+				} else if(searchBy != null && searchBy.equals("title") && !searchQuery.equals("")){
 					String itemTitle = "";
 					if(searchedItems.getString("h.itemType").equals("textbook")){
 						itemTitle += searchedItems.getString("t.title") + " " + searchedItems.getString("t.author");
@@ -182,39 +181,32 @@
 						continue;
 					}
 				}
-				out.print("<tr>");
-				out.print("<td>");
-				out.print(searchedItems.getString("a.accountUser"));
-				out.print("</td>");
-				out.print("<td>");
-				out.print(searchedItems.getString("h.itemType"));
-				out.print("</td>");
-				out.print("<td>");
-				out.print(searchedItems.getString("h.condition"));
-				out.print("</td>");
-				out.print("<td>");
-				out.print(searchedItems.getString("a.closingDatetime"));
-				out.print("</td>");
+				
+				out.print("<div style='width:200px; height: 200px; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
+				out.print("<h5 style='line-height:0.4'>" + searchedItems.getString("h.itemType") + "</h5>");
+				out.print("<h5 style='line-height:0.4'>" + searchedItems.getString("h.condition") + "</h5>");
+				out.print("<h2 style='line-height:0.4'>");
 				if(searchedItems.getString("h.itemType").equals("textbook")){
-					out.print("<td>");
 					out.print(searchedItems.getString("t.title"));
 					out.print("&nbsp;");
 					out.print(searchedItems.getString("t.author"));
-					out.print("</td>");
 				} else if(searchedItems.getString("h.itemType").equals("notebook")){
-					out.print("<td>");
 					out.print(searchedItems.getString("n.color"));
 					out.print("&nbsp;");
 					out.print(searchedItems.getString("n.name"));
-					out.print("</td>");
 				} else if(searchedItems.getString("h.itemType").equals("calculator")){
-					out.print("<td>");
 					out.print(searchedItems.getString("c.brand"));
 					out.print("&nbsp;");
 					out.print(searchedItems.getString("c.model"));
-					out.print("</td>");
 				}
-				out.print("</tr>");
+				out.print("</h2>");
+				out.print("<h4 style='line-height:0.4'>" + searchedItems.getString("a.accountUser") + "</h4>");
+				out.print("<form method='get' action='ItemPage.jsp'>");
+				out.print("<input type='hidden' name='auctionID' value='" + searchedItems.getString("a.auctionID") +"'>");
+				out.print("<input type='submit' value='View'>");
+				out.print("</form>");
+				out.print("</div>");
+			
 			}
 			
 			out.print("</table>");
