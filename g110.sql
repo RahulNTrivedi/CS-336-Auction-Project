@@ -129,32 +129,6 @@ LOCK TABLES `auction` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `bidon`
---
-
-DROP TABLE IF EXISTS `bidon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bidon` (
-  `bidID` int NOT NULL,
-  `auctionID` int NOT NULL,
-  PRIMARY KEY (`bidID`,`auctionID`),
-  KEY `auction_id_idx` (`auctionID`),
-  CONSTRAINT `auction_id` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `bid_id` FOREIGN KEY (`bidID`) REFERENCES `makesbid` (`bidID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bidon`
---
-
-LOCK TABLES `bidon` WRITE;
-/*!40000 ALTER TABLE `bidon` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bidon` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `calculator`
 --
 
@@ -217,8 +191,8 @@ DROP TABLE IF EXISTS `hasa_schoolsupply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hasa_schoolsupply` (
-  `itemType` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
+  `itemType` varchar(45) NOT NULL,
   `condition` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`auctionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -271,13 +245,15 @@ DROP TABLE IF EXISTS `makesbid`;
 CREATE TABLE `makesbid` (
   `bidID` int NOT NULL,
   `accountUser` varchar(45) NOT NULL,
+  `auctionID` int NOT NULL,
   `typeOfBidding` varchar(45) NOT NULL,
   `amount` int NOT NULL,
   `increment` int DEFAULT NULL,
   `upperLimit` int DEFAULT NULL,
   PRIMARY KEY (`bidID`),
   KEY `accountUser_idx` (`accountUser`),
-  CONSTRAINT `account_User` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `account_User` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `auctionID_fk` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
