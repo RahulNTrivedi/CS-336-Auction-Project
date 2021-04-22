@@ -40,17 +40,13 @@
 				query+="ORDER BY a.closingDateTime DESC ";
 			} else if(sortBy.equals("priceAscending")){
 				query+="LEFT OUTER JOIN (SELECT auctionID, MAX(amount) AS amt "
-						+ "FROM bidon AS b "
-						+ "INNER JOIN makesbid AS m "
-						+ "ON b.bidID = m.bidID "
+						+ "FROM makesbid AS m "
 						+ "GROUP BY auctionID) AS p "
 						+ "ON a.auctionID = p.auctionID "
 						+ "ORDER BY p.amt ASC ";
 			} else if(sortBy.equals("priceDescending")){
 				query+="LEFT OUTER JOIN (SELECT auctionID, MAX(amount) AS amt "
-						+ "FROM bidon AS b "
-						+ "INNER JOIN makesbid AS m "
-						+ "ON b.bidID = m.bidID "
+						+ "FROM makesbid AS m "
 						+ "GROUP BY auctionID) AS p "
 						+ "ON a.auctionID = p.auctionID "
 						+ "ORDER BY p.amt DESC ";
@@ -201,6 +197,11 @@
 				}
 				out.print("</h2>");
 				out.print("<h4 style='line-height:0.4'>" + searchedItems.getString("a.accountUser") + "</h4>");
+				if(searchedItems.getString("a.winner") == null){
+					out.print("<h4 style='line-height:0.4'> Status: Open</h4>");
+				} else {
+					out.print("<h4 style='line-height:0.4'> Status: Closed</h4>");
+				}
 				out.print("<form method='get' action='ItemPage.jsp'>");
 				out.print("<input type='hidden' name='auctionID' value='" + searchedItems.getString("a.auctionID") +"'>");
 				out.print("<input type='submit' value='View'>");
