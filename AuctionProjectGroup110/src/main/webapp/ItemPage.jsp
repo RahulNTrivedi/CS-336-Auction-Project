@@ -77,7 +77,7 @@
 		out.print("<h2>" + result.getString("a.accountUser") + "</h2>");
 		out.print("<h3>Current max bid: " + result.getString("a.maxBid") + "</h3>");
 		out.print("<h3>Closing Date: " + result.getString("a.closingDatetime") + "</h3>");
-		out.print("<form method='get' action='AddToInterset.jsp'>");
+		out.print("<form method='get' action='AddToInterest.jsp'>");
 		out.print("<input type='hidden' name='username' value=''>");
 		out.print("<input type='submit' value='Add to Wishlist'>");
 		out.print("</form>");

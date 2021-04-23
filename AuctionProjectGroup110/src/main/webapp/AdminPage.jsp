@@ -230,8 +230,9 @@
 				
 				out.print("<table'>");
 				out.print(request.getParameter("userSearch"));
-				if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")){
-					while(result.next()){
+				while(result.next()){
+					if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")
+							|| (result.getString("username")).toLowerCase().contains((String) request.getParameter("userSearch"))){
 						out.print("<tr>");
 						//make a column
 						out.print("<form method='get' action='EditUser.jsp'>");
@@ -241,23 +242,9 @@
 						out.print("</form>");
 						out.print("</tr>");
 					}
-				} else {
-					String searchQuery = ((String) request.getParameter("userSearch")).toLowerCase();
-					String sqlSearch = "SELECT LOWER(username) FROM account WHERE username='" + searchQuery +"';";
-					result = stmt.executeQuery(sqlSearch);
-					while(result.next()){
-						if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")){
-							out.print("<tr>");
-							//make a column
-							out.print("<form method='get' action='EditUser.jsp'>");
-							out.print("<input type='hidden' value='" + result.getString("username") + "' name='username'>");
-							out.print("<input type='submit' value='" + result.getString("username") + "'>");
-							
-							out.print("</form>");
-							out.print("</tr>");
-						} 
-					}
 				}
+				
+			
 				//parse out the results
 	
 				
