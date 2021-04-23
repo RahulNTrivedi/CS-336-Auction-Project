@@ -121,7 +121,7 @@
 					} 
 					
 					out.print("</table>");
-		
+
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 				con.close();
 		
@@ -162,8 +162,27 @@
 				//Get the database connection
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
+				
+				Statement stmt = con.createStatement();
 		
 				out.print("<h4>My Questions</h4>");
+				String str = "SELECT * FROM asksquestion WHERE endUsername='" + session.getAttribute("user") + "';";
+				ResultSet result = stmt.executeQuery(str);
+	
+				//parse out the results
+				while (result.next()) {
+					//make a row
+					out.print("<tr>");
+					//make a column
+					out.print("<form method='get' action='ViewQuestion.jsp'>");
+					out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
+					out.print("<input type='submit' value='ID=" + result.getString("questionID") + "'>");
+					
+					out.print("</form>");
+					out.print("</tr>");
+	
+				} 
+				
 				
 				con.close();
 			} catch (Exception ex) {
@@ -345,6 +364,7 @@
 							</form>
 						<br>
 				<% 
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
