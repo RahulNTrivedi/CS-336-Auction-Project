@@ -229,7 +229,6 @@
 				out.print("</form>");
 				
 				out.print("<table'>");
-				out.print(request.getParameter("userSearch"));
 				while(result.next()){
 					if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")
 							|| (result.getString("username")).toLowerCase().contains((String) request.getParameter("userSearch"))){

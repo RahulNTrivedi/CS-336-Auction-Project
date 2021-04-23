@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>View Question</title>
+<title>Change Email</title>
 </head>
 <body>
 	<%
@@ -24,38 +24,9 @@
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("questionID");
+		String id = request.getParameter("email");
 		
-		String question = "SELECT questionDetails from asksquestion";
-		ResultSet result = stmt.executeQuery(question);
-		result.next();
-		out.print("<h2>Question: '" +result.getString("questionDetails")+ "'</h2>");
-		
-		String replies = "SELECT * FROM writesreplies w where w.questionID='" + id + "';";
-		result = stmt.executeQuery(replies);
-		
-		out.print("<div>");
-		out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
-		out.print("<tr>");
-		out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
-		out.print("<th style='word-wrap: break-word'>Reply</th>");
-		out.print("</tr>");
-
-		
-		while(result.next() && result.getString("repUsername") != null){
-			out.print("<tr>");
-			out.print("<td style='word-wrap: break-word'>" + result.getString("repUsername") + "</td>");
-			out.print("<td style='word-wrap: break-word'>" + result.getString("replyDetails") + "</td>");
-			out.print("</tr>");
-		}
-		
-		out.print("</table>");
-		out.print("</div>");
-		
-		
-
-		
-		
+		stmt.executeQuery("alter table account modify column email '"+ id +"';");
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 
