@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Change Pass</title>
+<title>Change Phone</title>
 </head>
 <body>
 	<%
@@ -24,11 +24,12 @@
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("password");
+		String id = request.getParameter("phone");
 		String username = request.getParameter("username");
 		
-		PreparedStatement ps = con.prepareStatement("UPDATE account SET password ='"+ id +"' WHERE username='"+username+"';");
+		PreparedStatement ps = con.prepareStatement("UPDATE account SET phone ='"+ id +"' WHERE username='"+username+"';");
 		ps.executeUpdate();
+		
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 		out.print("Insert succeeded");

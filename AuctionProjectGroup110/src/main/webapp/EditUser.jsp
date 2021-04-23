@@ -56,17 +56,26 @@
 		
 		out.print("<form name='passInfo' method='post' action='ChangePass.jsp'>");
         out.print("Password: <input type = 'text' name = 'password'><br /><br />");
-		out.print("<input type='button' value='Change Password'>");
+        out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
+		out.print("<input type='submit' value='Change Password'>");
 		out.print("</form><br />");
 		
 		out.print("<form name='emailInfo' method='post' action='ChangeEmail.jsp'>");
 		out.print("Email: <input type = 'text' name = 'email'><br /><br />");
-		out.print("<input type='button' value='Change Email'>");
+		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
+		out.print("<input type='submit' value='Change Email'>");
 		out.print("</form><br />");
 		
 		out.print("<form name='phoneInfo' method='post' action='ChangePhone.jsp'>");
 		out.print("Phone: <input type = 'text' name = 'phone'><br /><br />");
-		out.print("<input type='button' value='Change Phone'>");
+		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
+		out.print("<input type='submit' value='Change Phone'>");
+		out.print("</form><br />");
+		
+		out.print("<form name='addressInfo' method='post' action='ChangeAddress.jsp'>");
+		out.print("Address: <input type = 'text' name = 'address'><br /><br />");
+		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
+		out.print("<input type='submit' value='Change Address'>");
 		out.print("</form>");
 		
 		
