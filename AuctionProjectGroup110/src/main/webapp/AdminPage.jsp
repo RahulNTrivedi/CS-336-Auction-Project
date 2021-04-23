@@ -214,6 +214,11 @@
 				//Get the database connection
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
+				
+				Statement stmt = con.createStatement();
+				
+				String str = "SELECT * FROM account;";
+				ResultSet result = stmt.executeQuery(str);
 		
 				out.print("<h4>View Users</h4>");
 				
@@ -223,7 +228,41 @@
 				out.print("<input type='button' value='Search' onclick='setUserSearch()'>");
 				out.print("</form>");
 				
-				out.print((String)request.getParameter("userSearch"));
+				out.print("<table'>");
+				out.print(request.getParameter("userSearch"));
+				if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")){
+					while(result.next()){
+						out.print("<tr>");
+						//make a column
+						out.print("<form method='get' action='EditUser.jsp'>");
+						out.print("<input type='hidden' value='" + result.getString("username") + "' name='username'>");
+						out.print("<input type='submit' value='" + result.getString("username") + "'>");
+						
+						out.print("</form>");
+						out.print("</tr>");
+					}
+				} else {
+					String searchQuery = ((String) request.getParameter("userSearch")).toLowerCase();
+					String sqlSearch = "SELECT LOWER(username) FROM account WHERE username='" + searchQuery +"';";
+					result = stmt.executeQuery(sqlSearch);
+					while(result.next()){
+						if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")){
+							out.print("<tr>");
+							//make a column
+							out.print("<form method='get' action='EditUser.jsp'>");
+							out.print("<input type='hidden' value='" + result.getString("username") + "' name='username'>");
+							out.print("<input type='submit' value='" + result.getString("username") + "'>");
+							
+							out.print("</form>");
+							out.print("</tr>");
+						} 
+					}
+				}
+				//parse out the results
+	
+				
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
