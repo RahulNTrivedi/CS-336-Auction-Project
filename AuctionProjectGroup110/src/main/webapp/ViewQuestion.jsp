@@ -23,6 +23,7 @@
 		out.print("<form action='MainPage.jsp'>");
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
+		out.print("<button type='button' name='back' onclick='history.back()'>Back</button>");
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String id = request.getParameter("questionID");
 		
