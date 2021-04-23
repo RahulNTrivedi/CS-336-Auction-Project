@@ -71,56 +71,21 @@
 					String str =  "SELECT * FROM account WHERE username = '" + session.getAttribute("user") + "';";
 		
 					ResultSet result = stmt.executeQuery(str);
+					result.next();
+					
 					out.print("<h4>User Info</h4>");
 					
-					out.print("<table>");
-		
-					//make a row
-					out.print("<tr>");
-					//make a column
-					out.print("<td>");
-					//print out column header
-					out.print("Username");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Email");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Phone");
-					out.print("</td>");
-					out.print("<td>");
-					out.print("Address");
-					out.print("</td>");
-					out.print("</tr>");
-		
-					//parse out the results
-					while (result.next()) {
-						//make a row
-						out.print("<tr>");
-						//make a column
-						out.print("<td>");
-						//Print out current username:
-						out.print(result.getString("username"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current email:
-						out.print(result.getString("email"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current phone
-						out.print(result.getString("phone"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current address
-						out.print(result.getString("address"));
-						out.print("</td>");
-						out.print("</tr>");
-		
-					} 
+					out.print("<h4>Username</h4>");
+					out.print("<p>" + result.getString("username") + "</p>");
 					
-					out.print("</table>");
+					out.print("<h4>Email</h4>");
+					out.print("<p>" + result.getString("email") + "</p>");
+					
+					out.print("<h4>Phone</h4>");
+					out.print("<p>" + result.getString("phone") + "</p>");
+					
+					out.print("<h4>Address</h4>");
+					out.print("<p>" + result.getString("address") + "</p>");
 
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 				con.close();
@@ -139,6 +104,32 @@
 		
 				out.print("<h4>My Bids</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a, makesbid m WHERE a.auctionID=m.auctionID AND m.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("<td>");
+				out.print("Amount");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("m.amount"));
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -152,6 +143,25 @@
 		
 				out.print("<h4>My Auctions</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a WHERE a.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
