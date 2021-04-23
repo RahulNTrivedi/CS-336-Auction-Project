@@ -178,7 +178,7 @@
 					}
 				}
 				
-				out.print("<div style='width:200px; height: auto; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
+				out.print("<div style='width: 300px; height: auto; border: 1px solid black; padding:20px ; margin: 5px; float: left'>");
 				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + searchedItems.getString("h.itemType") + "</h5>");
 				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>Condition: " + searchedItems.getString("h.condition") + "</h5>");
 				out.print("<h2 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
