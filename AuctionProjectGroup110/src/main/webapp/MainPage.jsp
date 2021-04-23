@@ -178,10 +178,10 @@
 					}
 				}
 				
-				out.print("<div style='width:200px; height: 200px; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
-				out.print("<h5 style='line-height:0.4'>" + searchedItems.getString("h.itemType") + "</h5>");
-				out.print("<h5 style='line-height:0.4'>" + searchedItems.getString("h.condition") + "</h5>");
-				out.print("<h2 style='line-height:0.4'>");
+				out.print("<div style='width:200px; height: auto; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
+				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + searchedItems.getString("h.itemType") + "</h5>");
+				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>Condition: " + searchedItems.getString("h.condition") + "</h5>");
+				out.print("<h2 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 				if(searchedItems.getString("h.itemType").equals("textbook")){
 					out.print(searchedItems.getString("t.title"));
 					out.print("&nbsp;");
@@ -196,11 +196,11 @@
 					out.print(searchedItems.getString("c.model"));
 				}
 				out.print("</h2>");
-				out.print("<h4 style='line-height:0.4'>" + searchedItems.getString("a.accountUser") + "</h4>");
+				out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>User: " + searchedItems.getString("a.accountUser") + "</h4>");
 				if(searchedItems.getString("a.winner") == null){
-					out.print("<h4 style='line-height:0.4'> Status: Open</h4>");
+					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Open</h4>");
 				} else {
-					out.print("<h4 style='line-height:0.4'> Status: Closed</h4>");
+					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Closed</h4>");
 				}
 				out.print("<form method='get' action='ItemPage.jsp'>");
 				out.print("<input type='hidden' name='auctionID' value='" + searchedItems.getString("a.auctionID") +"'>");
