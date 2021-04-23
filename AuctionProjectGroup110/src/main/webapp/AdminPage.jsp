@@ -72,6 +72,7 @@
 		
 					ResultSet result = stmt.executeQuery(str);
 					result.next();
+<<<<<<< HEAD
 					out.print("<h4>User Info</h4>");
 					
 					out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
@@ -93,6 +94,22 @@
 					out.print("</tr>");
 		
 					out.print("</table>");
+=======
+					
+					out.print("<h4>User Info</h4>");
+					
+					out.print("<h4>Username</h4>");
+					out.print("<p>" + result.getString("username") + "</p>");
+					
+					out.print("<h4>Email</h4>");
+					out.print("<p>" + result.getString("email") + "</p>");
+					
+					out.print("<h4>Phone</h4>");
+					out.print("<p>" + result.getString("phone") + "</p>");
+					
+					out.print("<h4>Address</h4>");
+					out.print("<p>" + result.getString("address") + "</p>");
+>>>>>>> 407ca51181bc5e75b803897677d01bc48c1a0d4f
 
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 				con.close();
@@ -111,6 +128,32 @@
 		
 				out.print("<h4>My Bids</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a, makesbid m WHERE a.auctionID=m.auctionID AND m.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("<td>");
+				out.print("Amount");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("m.amount"));
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -124,6 +167,25 @@
 		
 				out.print("<h4>My Auctions</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a WHERE a.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
