@@ -72,29 +72,6 @@
 		
 					ResultSet result = stmt.executeQuery(str);
 					result.next();
-<<<<<<< HEAD
-					out.print("<h4>User Info</h4>");
-					
-					out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
-		
-					//make a row
-					out.print("<tr>");
-					out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
-					out.print("<th style='word-wrap: break-word; width:20%'>Email</th>");
-					out.print("<th style='word-wrap: break-word; width:20%'>Phone</th>");
-					out.print("<th style='word-wrap: break-word; width:20%'>Address</th>");
-					out.print("</tr>");
-		
-
-					out.print("<tr>");
-					out.print("<td>"+result.getString("username")+"</td>");
-					out.print("<td>"+result.getString("email")+"</td>");
-					out.print("<td>"+result.getString("phone")+"</td>");
-					out.print("<td>"+result.getString("address")+"</td>");
-					out.print("</tr>");
-		
-					out.print("</table>");
-=======
 					
 					out.print("<h4>User Info</h4>");
 					
@@ -109,7 +86,6 @@
 					
 					out.print("<h4>Address</h4>");
 					out.print("<p>" + result.getString("address") + "</p>");
->>>>>>> 407ca51181bc5e75b803897677d01bc48c1a0d4f
 
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 				con.close();
