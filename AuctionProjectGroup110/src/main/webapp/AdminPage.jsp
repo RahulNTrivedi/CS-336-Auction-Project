@@ -71,55 +71,27 @@
 					String str =  "SELECT * FROM account WHERE username = '" + session.getAttribute("user") + "';";
 		
 					ResultSet result = stmt.executeQuery(str);
+					result.next();
 					out.print("<h4>User Info</h4>");
 					
-					out.print("<table>");
+					out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
 		
 					//make a row
 					out.print("<tr>");
-					//make a column
-					out.print("<td>");
-					//print out column header
-					out.print("Username");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Email");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Phone");
-					out.print("</td>");
-					out.print("<td>");
-					out.print("Address");
-					out.print("</td>");
+					out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
+					out.print("<th style='word-wrap: break-word; width:20%'>Email</th>");
+					out.print("<th style='word-wrap: break-word; width:20%'>Phone</th>");
+					out.print("<th style='word-wrap: break-word; width:20%'>Address</th>");
 					out.print("</tr>");
 		
-					//parse out the results
-					while (result.next()) {
-						//make a row
-						out.print("<tr>");
-						//make a column
-						out.print("<td>");
-						//Print out current username:
-						out.print(result.getString("username"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current email:
-						out.print(result.getString("email"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current phone
-						out.print(result.getString("phone"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current address
-						out.print(result.getString("address"));
-						out.print("</td>");
-						out.print("</tr>");
+
+					out.print("<tr>");
+					out.print("<td>"+result.getString("username")+"</td>");
+					out.print("<td>"+result.getString("email")+"</td>");
+					out.print("<td>"+result.getString("phone")+"</td>");
+					out.print("<td>"+result.getString("address")+"</td>");
+					out.print("</tr>");
 		
-					} 
-					
 					out.print("</table>");
 
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
@@ -164,11 +136,10 @@
 				Connection con = db.getConnection();
 				
 				Statement stmt = con.createStatement();
-		
-				out.print("<h4>My Questions</h4>");
 				String str = "SELECT * FROM asksquestion WHERE endUsername='" + session.getAttribute("user") + "';";
 				ResultSet result = stmt.executeQuery(str);
 	
+				out.print("<h4>My Questions</h4>");
 				//parse out the results
 				while (result.next()) {
 					//make a row
@@ -181,8 +152,7 @@
 					out.print("</form>");
 					out.print("</tr>");
 	
-				} 
-				
+				} 				
 				
 				con.close();
 			} catch (Exception ex) {
@@ -195,6 +165,10 @@
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
 				
+				Statement stmt = con.createStatement();
+				String str = "SELECT * FROM asksquestion;";
+				ResultSet result = stmt.executeQuery(str);
+				
 				out.print("<h4>View Questions</h4>");
 				
 				out.print("<form name='faqForm' method='post'>");
@@ -203,7 +177,23 @@
 				out.print("<input type='button' value='Search' onclick='setFaqSearch()'>");
 				out.print("</form>");
 				
-				out.print((String)request.getParameter("faqSearch"));
+				out.print("<table'>");
+				while(result.next()){
+					if(request.getParameter("faqSearch") == null || ((String) request.getParameter("faqSearch")).equals("")
+							|| (result.getString("questionDetails")).toLowerCase().contains((String) request.getParameter("faqSearch"))){
+						out.print("<tr>");
+						//make a column
+						out.print("<form method='get' action='ViewQuestion.jsp'>");
+						out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
+						out.print("<input type='submit' value='ID=" + result.getString("questionID") + "'>");
+						
+						out.print("</form>");
+						out.print("</tr>");
+					}
+				}
+				
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -216,7 +206,6 @@
 				Connection con = db.getConnection();
 				
 				Statement stmt = con.createStatement();
-				
 				String str = "SELECT * FROM account;";
 				ResultSet result = stmt.executeQuery(str);
 		
@@ -242,9 +231,6 @@
 						out.print("</tr>");
 					}
 				}
-				
-			
-				//parse out the results
 	
 				
 				out.print("</table>");
@@ -260,7 +246,137 @@
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
 		
+				Statement stmt = con.createStatement();
+				String str = "SELECT SUM(a.maxBid) val FROM auction a WHERE winner IS NOT null;";
+				ResultSet result = stmt.executeQuery(str);
+				result.next();
+				
 				out.print("<h4>Generate Sales Report</h4>");
+				out.print("<h2>Total Earnings: " + result.getString("val")+ "</h2>");
+				out.print("<h2>Earnings per Item Type: </h2>");
+				
+				str = "SELECT itemType, SUM(max) earnings FROM (SELECT auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS bids, hasa_schoolsupply has WHERE has.auctionID = bids.auctionID GROUP BY itemType;";
+				result = stmt.executeQuery(str);
+				
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Item Type</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("itemType") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("itemType") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h2>Earnings per Item: </h2>");
+				
+				out.print("<h3>Notebook:</h3>");
+				str = "SELECT color, name, SUM(max) earnings FROM (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS auc, notebook n WHERE auc.auctionID = n.auctionID GROUP BY color, name;";
+				result = stmt.executeQuery(str);
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Color</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Name</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("name") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("color") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("name") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h3>Textbook:</h3>");
+				str = "SELECT title, author, SUM(max) earnings FROM (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS auc, textbook t WHERE auc.auctionID = t.auctionID GROUP BY author, title";
+				result = stmt.executeQuery(str);
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Title</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Author</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("title") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("title") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("author") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h3>Calculator:</h3>");
+				str = "SELECT model, brand, SUM(max) earnings FROM (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS auc, calculator c WHERE auc.auctionID = c.auctionID GROUP BY model, brand;";
+				result = stmt.executeQuery(str);
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Model</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Brand</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("model") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("model") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("brand") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h2>Earnings per End User: </h2>");
+				str = "SELECT winner username, SUM(maxBid) earnings FROM auction WHERE winner IS NOT null GROUP BY winner;";
+				result = stmt.executeQuery(str);
+				
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("username") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("username") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h2>Best Buyers: </h2>");
+				str = "SELECT winner username, SUM(maxBid) earnings FROM auction WHERE winner IS NOT null GROUP BY winner ORDER BY earnings DESC LIMIT 5;";
+				result = stmt.executeQuery(str);
+				
+				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
+				out.print("<tr>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("</tr>");
+				while(result.next() && result.getString("username") != null){
+					out.print("<tr>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("username") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
+				out.print("<h2>Best Selling Items: </h2>");
+				str = "SELECT items.auctionID, items.author, items.title, items.brand, items.model, items.color, items.name, maxVal.max as earnings FROM (SELECT a.auctionID, t.author, t.title, c.brand, c.model, n.color, n.name FROM hasa_schoolsupply a LEFT JOIN textbook AS t ON a.auctionID = t.auctionID LEFT JOIN calculator AS c ON a.auctionID = c.auctionID LEFT JOIN notebook AS n ON a.auctionID = n.auctionID) AS items, (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS maxVal WHERE maxVal.auctionID = items.auctionID ORDER BY earnings DESC LIMIT 5;";
+				result = stmt.executeQuery(str);
+				int x = 1;
+				while(result.next() && result.getString("earnings") != null){
+					if(result.getString("name") != null){
+						out.print(x++ + ".");
+						out.print("<p>Item Type: Notebook</p><p>Color: " + result.getString("color") + "</p><p>Name: " + result.getString("name") + "</p><p>Earnings: " + result.getString("earnings")+ "</p><br />");
+					} else if (result.getString("brand") != null){
+						out.print(x++ + ".");
+						out.print("<p>Item Type: Calculator</p><p>Brand: " + result.getString("brand") + "</p><p>Model: " + result.getString("model") + "</p><p>Earnings: " + result.getString("earnings") + "</p><br />");
+					} else {
+						out.print(x++ + ".");
+						out.print("<p>Item Type: Textbook</p><p>Title: " + result.getString("title") + "</p><p>Author: " + result.getString("author") + "</p><p>Earnings: " + result.getString("earnings") + "</p><br />");
+					}
+				}
 				
 				con.close();
 			} catch (Exception ex) {
