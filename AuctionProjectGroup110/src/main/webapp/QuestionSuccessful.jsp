@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Change Phone</title>
+<title>Question Created</title>
 </head>
 <body>
 	<%
@@ -20,22 +20,32 @@
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
 
-		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("phone");
-		String username = request.getParameter("username");
+		//Get parameters from the HTML form at the RegisterPage.jsp
+			
+		String question = request.getParameter("question");
+		String username = (String) session.getAttribute("user");
 		
-		PreparedStatement ps = con.prepareStatement("UPDATE account SET phone ='"+ id +"' WHERE username='"+username+"';");
+		String sql = "SELECT MAX(questionID) maxVal from asksquestion;";
+		ResultSet result = stmt.executeQuery(sql);
+		result.next();
+		
+		int questionid = 1;
+		if(result.getString("maxVal") != null){
+			questionid = Integer.parseInt(result.getString("maxVal")) +1;
+		}
+		
+		PreparedStatement ps = con.prepareStatement("INSERT INTO asksquestion VALUES (" + questionid+ ", '" + username + "', '" + question + "');");
 		ps.executeUpdate();
-		
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
 		out.print("Insert succeeded");
 		response.sendRedirect("MainPage.jsp");
-
+		
 	} catch (Exception ex) {
 		out.print(ex);
-		out.print("Failed");
+		out.print("Insert failed");
 	}
 %>
+	<a href="MainPage.jsp">Back to Home</a>
 </body>
 </html>

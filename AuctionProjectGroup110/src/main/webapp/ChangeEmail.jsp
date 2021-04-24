@@ -17,11 +17,6 @@
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
 
-		//Create a SQL statement
-
-		out.print("<form action='MainPage.jsp'>");
-		out.print("<input type='submit' value='Home'/>");
-		out.print("</form>");
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String id = request.getParameter("email");
 		String username = request.getParameter("username");

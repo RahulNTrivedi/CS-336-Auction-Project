@@ -23,7 +23,7 @@
 		<br>
 		
 		<h1>Post Question</h1>
-		<form method="post" action="RegisterSuccessful.jsp">
+		<form method="post" action="QuestionSuccessful.jsp">
 		<table>
 		<tr>    
 			<td>Question</td>
