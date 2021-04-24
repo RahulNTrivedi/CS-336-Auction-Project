@@ -82,6 +82,10 @@
 		out.print("<input type='hidden' name='username' value=''>");
 		out.print("<input type='submit' value='Add to Wishlist'>");
 		out.print("</form>");
+		out.print("<form action='DeleteAuction.jsp'>");
+		out.print("<input type='hidden' name='auctionID'  value='"+result.getString("auctionID")+"'>");
+		out.print("<input type='submit' value='Delete Auction'/>");
+		out.print("</form>");
 		out.print("</div>");
 		
 		out.print("<br>");
