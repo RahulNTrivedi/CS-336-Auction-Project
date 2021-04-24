@@ -197,7 +197,7 @@
 				}
 				out.print("</h2>");
 				out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>User: " + searchedItems.getString("a.accountUser") + "</h4>");
-				if(searchedItems.getString("a.winner") == null){
+				if(!searchedItems.getBoolean("a.isClosed")){
 					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Open</h4>");
 				} else {
 					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Closed</h4>");
