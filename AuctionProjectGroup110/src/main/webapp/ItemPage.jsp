@@ -27,9 +27,21 @@
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String id = request.getParameter("auctionID");
 		
-		String str = "SELECT * FROM auction AS a LEFT OUTER JOIN hasa_schoolsupply AS h ON a.auctionID = h.auctionID WHERE a.auctionID = '" + id + " ';";
+		String str = "SELECT * FROM account;";
 		
 		ResultSet result = stmt.executeQuery(str);
+		result.next();
+		
+		if(result.getByte("isStaff") == 1 && result.getByte("isAdmin") == 0) {
+			out.print("<form action='DeleteAuction.jsp'>");
+			out.print("<input type='hidden' name='auctionID'  value='"+id+"'>");
+			out.print("<input type='submit' value='Delete Auction'/>");
+			out.print("</form>");
+		}
+		
+		str = "SELECT * FROM auction AS a LEFT OUTER JOIN hasa_schoolsupply AS h ON a.auctionID = h.auctionID WHERE a.auctionID = '" + id + " ';";
+		
+		result = stmt.executeQuery(str);
 		result.next();
 		
 		out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
@@ -81,10 +93,6 @@
 		out.print("<form method='get' action='AddToInterest.jsp'>");
 		out.print("<input type='hidden' name='username' value=''>");
 		out.print("<input type='submit' value='Add to Wishlist'>");
-		out.print("</form>");
-		out.print("<form action='DeleteAuction.jsp'>");
-		out.print("<input type='hidden' name='auctionID'  value='"+result.getString("auctionID")+"'>");
-		out.print("<input type='submit' value='Delete Auction'/>");
 		out.print("</form>");
 		out.print("</div>");
 		
