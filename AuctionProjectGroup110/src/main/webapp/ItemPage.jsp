@@ -90,7 +90,7 @@
 		
 		out.print("<br>");
 		
-		if(result.getString("winner") == null){
+		if(!result.getBoolean("isClosed")){
 			out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 			out.print("<h2>Make a bid</h2>");
 			out.print("<form method='get' action='MakeBid.jsp'>");
