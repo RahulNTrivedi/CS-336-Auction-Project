@@ -217,12 +217,11 @@ DROP TABLE IF EXISTS `itemsofinterest`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `itemsofinterest` (
-  `itemType` varchar(45) NOT NULL,
+  `itemID1` varchar(45) NOT NULL,
+  `itemID2` varchar(45) NOT NULL,
   `interestUsername` varchar(45) NOT NULL,
-  `name` varchar(45) NOT NULL DEFAULT '',
-  `title` varchar(45) NOT NULL DEFAULT '',
-  `model` varchar(45) NOT NULL DEFAULT '',
-  PRIMARY KEY (`itemType`, `interestUsername`),
+  `itemType` varchar(45) NOT NULL,
+  PRIMARY KEY (`itemID1`, `itemID2`, `interestUsername`, `itemType`),
   KEY `interestUser_idx` (`interestUsername`),
   CONSTRAINT `interestUser` FOREIGN KEY (`interestUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

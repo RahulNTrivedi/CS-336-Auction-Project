@@ -30,10 +30,11 @@
 		</tr>
 		<tr>
 			<td>
-				<input 
-					type="text" 
+				<textarea 
+					rows="10"
+					cols="50"
 					name="question"
-					required = "required">
+					required = "required"></textarea>
 			</td>
 		</tr>
 		</table>

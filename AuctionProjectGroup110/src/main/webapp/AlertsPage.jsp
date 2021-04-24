@@ -23,6 +23,72 @@
 		<br>
 	
 		<h1>Alerts</h1>
+		
+		<div style='border: 1px solid black; padding: 5px; margin: 5px'>
+		<h3>Items of Interest:</h3>
+			<% 
+			try {
+				//Get the database connection
+				ApplicationDB db = new ApplicationDB();	
+				Connection con = db.getConnection();
+				
+				Statement stmt = con.createStatement();
+				Statement substmt = con.createStatement();
+				String str = "SELECT * FROM itemsofinterest WHERE interestUsername='" + session.getAttribute("user") + "';";
+				ResultSet result = stmt.executeQuery(str);
+				while(result.next()){
+					out.print("<h4>" + result.getString("itemID1") + " " + result.getString("itemID2") + "</h4>");
+					int count = 0;
+					if(result.getString("itemType").equals("calculator")){
+						str = "SELECT * FROM auction AS a INNER JOIN calculator AS c ON a.auctionID = c.auctionID WHERE a.isClosed = 0 AND c.brand='" + result.getString("itemID1") + "' AND c.model = '" + result.getString("itemID2") + "'; ";
+						ResultSet subset = substmt.executeQuery(str);
+						while(subset.next()){
+							out.print("<form method='get' action='ItemPage.jsp'>");
+							out.print("<input type='hidden' name='auctionID' value='" + subset.getString("a.auctionID") +"'>");
+							out.print("<input type='submit' value='View'>");
+							count++;
+						}
+						if(count==0){
+							out.print("Not available");
+						}
+					} else if(result.getString("itemType").equals("textbook")){
+						str = "SELECT * FROM auction AS a INNER JOIN textbook AS t ON a.auctionID = t.auctionID WHERE a.isClosed = 0 AND t.title='" + result.getString("itemID1") + "' AND t.author = '" + result.getString("itemID2") + "'; ";
+						ResultSet subset = substmt.executeQuery(str);
+						while(subset.next()){
+							out.print("<form method='get' action='ItemPage.jsp'>");
+							out.print("<input type='hidden' name='auctionID' value='" + subset.getString("a.auctionID") +"'>");
+							out.print("<input type='submit' value='View'>");
+							count++;
+						}
+						if(count==0){
+							out.print("Not available");
+						}
+					} else if(result.getString("itemType").equals("notebook")){
+						str = "SELECT * FROM auction AS a INNER JOIN notebook AS n ON a.auctionID = n.auctionID WHERE a.isClosed = 0 AND n.color='" + result.getString("itemID1") + "' AND n.name = '" + result.getString("itemID2") + "'; ";
+						ResultSet subset = substmt.executeQuery(str);
+						while(subset.next()){
+							out.print("<form method='get' action='ItemPage.jsp'>");
+							out.print("<input type='hidden' name='auctionID' value='" + subset.getString("a.auctionID") +"'>");
+							out.print("<input type='submit' value='View'>");
+							count++;
+						}
+						if(count==0){
+							out.print("Not available");
+						}
+					} else {
+						out.print("err");
+					}
+					out.print("<br>");
+				}
+				
+				
+				con.close();
+			} catch (Exception ex) {
+				out.print(ex);
+				out.print("Failed");
+			}
+			%>
+		</div>
 	<%
     }
 	%>
