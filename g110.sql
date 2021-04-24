@@ -116,7 +116,8 @@ CREATE TABLE `auction` (
   `isClosed` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`auctionID`),
   KEY `accountUser__idx` (`accountUser`),
-  CONSTRAINT `accountUser_` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `accountUser_` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `winner_` FOREIGN KEY (`winner`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
