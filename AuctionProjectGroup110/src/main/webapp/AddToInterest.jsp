@@ -11,6 +11,7 @@
 </head>
 <body>
 	<%
+	String id = request.getParameter("auctionID");
 	try {
 
 		//Get the database connection
@@ -21,8 +22,6 @@
 		Statement stmt = con.createStatement();
 
 		//Get parameters from the HTML form at the RegisterPage.jsp
-			
-		String id = request.getParameter("auctionID");
 		
 		String str = "SELECT itemType FROM hasa_schoolsupply WHERE auctionID = '" + id + " ';";
 		ResultSet result = stmt.executeQuery(str);
@@ -52,6 +51,10 @@
 			itemID2 = result.getString("author");
 		} else {
 			out.print("Insert failed");
+			out.print("<form action='ItemPage.jsp'>");
+			out.print("<input type='hidden' name='auctionID' value='" + id + "'>");
+			out.print("<input type='submit' value='Auction Page'/>");
+			out.print("</form>");
 			return;
 		}
 		
@@ -59,14 +62,15 @@
 		ps.executeUpdate();
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
-		out.print("Insert succeeded");
+		out.print("Added to Wishlist");
 		
 	} catch (Exception ex) {
-		out.print(ex);
-		out.print("<br>");
 		out.print("Already on Wishlist");
 	}
+	out.print("<form action='ItemPage.jsp'>");
+	out.print("<input type='hidden' name='auctionID' value='" + id + "'>");
+	out.print("<input type='submit' value='Auction Page'/>");
+	out.print("</form>");
 %>
-	<a href="MainPage.jsp">Back to Home</a>
 </body>
 </html>
