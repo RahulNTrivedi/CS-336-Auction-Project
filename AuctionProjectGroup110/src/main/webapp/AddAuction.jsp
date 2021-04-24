@@ -25,7 +25,6 @@
 		//Get parameters from the HTML form at the RegisterPage.jsp
 		String username = (String) session.getAttribute("user");
 		
-		String itemName = request.getParameter("itemname");
 		String cond = request.getParameter("condition");
 		String itemType = request.getParameter("itemtype");
 		
