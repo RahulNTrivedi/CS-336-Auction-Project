@@ -27,11 +27,11 @@
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String id = request.getParameter("questionID");
 		
-		String question = "SELECT questionDetails,endUsername from asksquestion";
+		String question = "SELECT questionDetails,endUsername from asksquestion where questionID = '" + id + "';";
 		ResultSet result = stmt.executeQuery(question);
 		result.next();
-		out.print("<h2>Question: '" +result.getString("questionDetails")+ "'</h2>");
-		out.print("<h2>Username: '" +result.getString("endUsername")+ "'</h2>");
+		out.print("<h2>Question: '" + result.getString("questionDetails")+ "'</h2>");
+		out.print("<h2>Username: '" + result.getString("endUsername")+ "'</h2>");
 		
 		String replies = "SELECT * FROM writesreplies w where w.questionID='" + id + "';";
 		result = stmt.executeQuery(replies);
