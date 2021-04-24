@@ -89,6 +89,23 @@
 		ps.setInt(6, 0);
 		//Run the query against the DB
 		ps.executeUpdate();
+		
+		
+		//insert into createAuction table
+		insert = "INSERT INTO createauction(auctionID, accountUserID, reserveAmount)"
+				+ "VALUES (?, ?, ?)";
+		
+		// also need to insert into "hasaschoolsupply
+		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+		PreparedStatement createAuctionPs = con.prepareStatement(insert);
+
+		//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+		createAuctionPs.setInt(1, auctionId);
+		createAuctionPs.setString(2, username);
+		createAuctionPs.setInt(3, reserve);
+		//Run the query against the DB
+		createAuctionPs.executeUpdate();
+		
 
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
