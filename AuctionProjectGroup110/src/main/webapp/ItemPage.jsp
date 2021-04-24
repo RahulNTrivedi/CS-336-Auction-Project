@@ -102,6 +102,7 @@
 			out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 			out.print("<h2>Make a bid</h2>");
 			out.print("<form method='get' action='MakeBid.jsp'>");
+			out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
 			out.print("<input type='submit' value='Make bid'>");
 			out.print("</form>");
 			out.print("</div>");
