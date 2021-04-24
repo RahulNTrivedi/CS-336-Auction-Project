@@ -363,3 +363,72 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2021-03-23 16:59:25
+
+DELIMITER $$
+
+CREATE 
+	EVENT `close_auction`
+    ON SCHEDULE EVERY 1 minute
+    DO BEGIN
+        -- sends alerts to all winners
+        INSERT alerts(alertMsg, alertUsername)
+		SELECT generateMessage(temp.auctionID), accountUser
+		FROM (makesbid JOIN (SELECT b.auctionID, max(amount) maxAmount
+		FROM makesbid b, auction a
+		WHERE a.auctionID = b.auctionID and a.isClosed = 0 and a.maxBid > a.reserve and a.closingDatetime < NOW()
+		GROUP BY auctionID
+		) temp
+				on makesbid.auctionID = temp.auctionID)
+		WHERE amount = maxAmount;
+        
+        -- set winners for auctions
+        DROP TABLE IF EXISTS T2;
+		CREATE TEMPORARY TABLE T2
+		SELECT temp.auctionID, accountUser
+		FROM (makesbid JOIN (SELECT b.auctionID, max(amount) maxAmount
+		FROM makesbid b, auction a
+		WHERE a.auctionID = b.auctionID and a.isClosed = 0 and a.maxBid > a.reserve and a.closingDatetime < NOW()
+		GROUP BY auctionID
+		) temp
+				on makesbid.auctionID = temp.auctionID)
+		WHERE amount = maxAmount;
+
+		UPDATE auction a, T2 t2
+		SET winner = t2.accountUser
+		WHERE t2.auctionID = a.auctionID;
+        
+		-- all to-be-closed auctions
+        DROP TABLE IF EXISTS T1;
+		CREATE temporary TABLE T1
+		SELECT auctionID
+		FROM auction
+		WHERE isClosed = 0 and closingDatetime < now();
+
+		-- marks all auctions that are complete as closed
+		UPDATE `auction`
+		SET isClosed = 1
+		WHERE auctionID in (select auctionID from T1);
+	END $$
+
+DELIMITER ;      
+
+DELIMITER //
+CREATE FUNCTION generateMessage(auction int) RETURNS varchar(250) DETERMINISTIC
+BEGIN
+	return CONCAT('Congrats, you won auction number ', auction);
+END 
+//
+DELIMITER ;
+-- used to see whether the event is running and when it last ran
+-- SELECT * FROM INFORMATION_SCHEMA. events;
+
+
+
+
+
+   
+   
+
+
+
+
