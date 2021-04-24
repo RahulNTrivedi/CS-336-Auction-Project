@@ -20,6 +20,7 @@
 		out.print("<form action='MainPage.jsp'>");
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
+		out.print("<button type='button' name='back' onclick='history.back()'>Back</button>");
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
 
