@@ -37,6 +37,7 @@
 		
 		out.print("<tr>");
 		out.print("<th>Username</th>");
+		out.print("<th>Password</th>");
 		out.print("<th>Email</th>");
 		out.print("<th>Phone</th>");
 		out.print("<th>Address</th>");
@@ -46,6 +47,7 @@
 		out.print("<tr>");
 		//make a column
 		out.print("<td>"+result.getString("username")+ "</td>");
+		out.print("<td>"+result.getString("password")+ "</td>");
 		out.print("<td>"+result.getString("email")+"</td>");
 		out.print("<td>"+result.getString("phone")+"</td>");
 		out.print("<td>"+result.getString("address")+"</td>");

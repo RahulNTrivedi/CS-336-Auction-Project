@@ -78,6 +78,9 @@
 					out.print("<h4>Username</h4>");
 					out.print("<p>" + result.getString("username") + "</p>");
 					
+					out.print("<h4>Password</h4>");
+					out.print("<p>" + result.getString("password") + "</p>");
+					
 					out.print("<h4>Email</h4>");
 					out.print("<p>" + result.getString("email") + "</p>");
 					
