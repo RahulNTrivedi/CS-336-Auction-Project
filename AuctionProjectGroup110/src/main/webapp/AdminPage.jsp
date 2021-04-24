@@ -244,7 +244,7 @@
 				Connection con = db.getConnection();
 				
 				Statement stmt = con.createStatement();
-				String str = "SELECT * FROM account;";
+				String str = "SELECT * FROM account WHERE isStaff = 0;";
 				ResultSet result = stmt.executeQuery(str);
 		
 				out.print("<h4>View Users</h4>");

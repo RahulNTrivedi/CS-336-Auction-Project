@@ -82,11 +82,11 @@ DROP TABLE IF EXISTS `asksquestion`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `asksquestion` (
   `questionID` int NOT NULL,
-  `endUsername` varchar(45) NOT NULL,
+  `endUsername` varchar(45),
   `questionDetails` varchar(1000) NOT NULL,
   PRIMARY KEY (`questionID`),
   KEY `endUser_idx` (`endUsername`),
-  CONSTRAINT `endUser` FOREIGN KEY (`endUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `endUser` FOREIGN KEY (`endUsername`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,14 +108,15 @@ DROP TABLE IF EXISTS `auction`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `auction` (
   `auctionID` int NOT NULL,
-  `accountUser` varchar(45) NOT NULL,
+  `accountUser` varchar(45),
   `reserve` int NOT NULL,
   `winner` varchar(45) DEFAULT NULL,
   `closingDatetime` datetime NOT NULL,
   `maxBid` int NOT NULL,
+  `isClosed` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`auctionID`),
   KEY `accountUser__idx` (`accountUser`),
-  CONSTRAINT `accountUser_` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `accountUser_` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,12 +165,12 @@ DROP TABLE IF EXISTS `createauction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `createauction` (
-  `accountuserID` varchar(45) NOT NULL,
   `auctionID` int NOT NULL,
+  `accountuserID` varchar(45),
   `reserveAmount` int DEFAULT NULL,
-  PRIMARY KEY (`accountuserID`,`auctionID`),
+  PRIMARY KEY (`auctionID`),
   KEY `aucID_idx` (`auctionID`),
-  CONSTRAINT `accID` FOREIGN KEY (`accountuserID`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accID` FOREIGN KEY (`accountuserID`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `aucID` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -244,7 +245,7 @@ DROP TABLE IF EXISTS `makesbid`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `makesbid` (
   `bidID` int NOT NULL,
-  `accountUser` varchar(45) NOT NULL,
+  `accountUser` varchar(45),
   `auctionID` int NOT NULL,
   `typeOfBidding` varchar(45) NOT NULL,
   `amount` int NOT NULL,
@@ -252,7 +253,7 @@ CREATE TABLE `makesbid` (
   `upperLimit` int DEFAULT NULL,
   PRIMARY KEY (`bidID`),
   KEY `accountUser_idx` (`accountUser`),
-  CONSTRAINT `account_User` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `account_User` FOREIGN KEY (`accountUser`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `auctionID_fk` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -331,12 +332,12 @@ DROP TABLE IF EXISTS `writesreplies`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `writesreplies` (
   `replyID` int NOT NULL,
-  `repUsername` varchar(45) NOT NULL,
+  `repUsername` varchar(45),
   `questionID` int NOT NULL,
   `replyDetails` varchar(1000) NOT NULL,
   PRIMARY KEY (`replyID`),
   KEY `repUser_idx` (`repUsername`),
-  CONSTRAINT `repUser` FOREIGN KEY (`repUsername`) REFERENCES `account` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `repUser` FOREIGN KEY (`repUsername`) REFERENCES `account` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_questionID` FOREIGN KEY (`questionID`) REFERENCES `asksQuestion` (`questionID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

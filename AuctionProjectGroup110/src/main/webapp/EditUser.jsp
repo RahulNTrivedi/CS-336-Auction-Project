@@ -77,8 +77,12 @@
 		out.print("Address: <input type = 'text' name = 'address'><br /><br />");
 		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
 		out.print("<input type='submit' value='Change Address'>");
-		out.print("</form>");
+		out.print("</form><br />");
 		
+		out.print("<form action='DeleteUser.jsp'>");
+		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
+		out.print("<input type='submit' value='Delete User'/>");
+		out.print("</form>");
 		
 		
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
