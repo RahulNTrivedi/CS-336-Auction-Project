@@ -188,7 +188,7 @@
 					//make a column
 					out.print("<form method='get' action='ViewQuestion.jsp'>");
 					out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
-					out.print("<input type='submit' value='ID=" + result.getString("questionID") + "'>");
+					out.print("<input type='submit' value='" + result.getString("questionDetails") + "'>");
 					
 					out.print("</form>");
 					out.print("</tr>");
@@ -221,12 +221,12 @@
 				out.print("<table'>");
 				while(result.next()){
 					if(request.getParameter("faqSearch") == null || ((String) request.getParameter("faqSearch")).equals("")
-							|| (result.getString("questionDetails")).toLowerCase().contains((String) request.getParameter("faqSearch"))){
+							|| (result.getString("endUsername") + " " + result.getString("questionDetails")).toLowerCase().contains((String) request.getParameter("faqSearch"))){
 						out.print("<tr>");
 						//make a column
 						out.print("<form method='get' action='ViewQuestion.jsp'>");
 						out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
-						out.print("<input type='submit' value='ID=" + result.getString("questionID") + "'>");
+						out.print("<input type='submit' value='" + result.getString("endUsername") + ": " + result.getString("questionDetails") + "'>");
 						
 						out.print("</form>");
 						out.print("</tr>");
