@@ -32,30 +32,30 @@
 		ResultSet result = stmt.executeQuery(str);
 		result.next();
 		
-		out.print("<table>");
+		out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
 		
 		
 		out.print("<tr>");
-		out.print("<th>Username</th>");
-		out.print("<th>Password</th>");
-		out.print("<th>Email</th>");
-		out.print("<th>Phone</th>");
-		out.print("<th>Address</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Password</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Email</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Phone</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Address</th>");
 		out.print("</tr>");
 
 
 		out.print("<tr>");
 		//make a column
-		out.print("<td>"+result.getString("username")+ "</td>");
-		out.print("<td>"+result.getString("password")+ "</td>");
-		out.print("<td>"+result.getString("email")+"</td>");
-		out.print("<td>"+result.getString("phone")+"</td>");
-		out.print("<td>"+result.getString("address")+"</td>");
+		out.print("<td style='word-wrap: break-word'>"+result.getString("username")+ "</td>");
+		out.print("<td style='word-wrap: break-word'>"+result.getString("password")+ "</td>");
+		out.print("<td style='word-wrap: break-word'>"+result.getString("email")+"</td>");
+		out.print("<td style='word-wrap: break-word'>"+result.getString("phone")+"</td>");
+		out.print("<td style='word-wrap: break-word'>"+result.getString("address")+"</td>");
 		out.print("</tr>");
 
 
 		
-		out.print("</table>");
+		out.print("</table><br />");
 		
 		out.print("<form name='passInfo' method='post' action='ChangePass.jsp'>");
         out.print("Password: <input type = 'text' name = 'password'><br /><br />");

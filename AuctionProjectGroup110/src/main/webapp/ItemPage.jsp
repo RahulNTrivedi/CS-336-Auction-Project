@@ -31,8 +31,8 @@
 		
 		ResultSet result = stmt.executeQuery(str);
 		result.next();
-		
-		if(result.getByte("isStaff") == 1 && result.getByte("isAdmin") == 0) {
+		boolean custrep = result.getByte("isStaff") == 1 && result.getByte("isAdmin") == 0;
+		if(custrep) {
 			out.print("<form action='DeleteAuction.jsp'>");
 			out.print("<input type='hidden' name='auctionID'  value='"+id+"'>");
 			out.print("<input type='submit' value='Delete Auction'/>");
@@ -118,20 +118,29 @@
 		result = stmt.executeQuery(str);
 		out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 		out.print("<h3 style='line-height:0.4'>Previous Bids</h3>");
-		out.print("<table>");
+		out.print("<table  border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
 		out.print("<tr>");
-		out.print("<td>Username</td>");
-		out.print("<td>Amount</td>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
+		out.print("<th style='word-wrap: break-word; width:20%'>Amount</th>");
+		if(custrep){
+			out.print("<th 'word-wrap: break-word; width:20%'></th>");
+		}
 		out.print("</tr>");
 		while(result.next()){
 			out.print("<tr>");
-			out.print("<td>");
+			out.print("<td style='word-wrap: break-word'>");
 			out.print("<form method='get' action='ViewUserPage.jsp'>");
 			out.print("<input type='hidden' name='username' value='" + result.getString("accountUser") +"'>");
 			out.print("<input type='submit' value='"+ result.getString("accountUser") +"'>");
 			out.print("</form>");
 			out.print("</td>");
-			out.print("<td>" + result.getString("amount") + "</td>");
+			out.print("<td style='word-wrap: break-word'>" + result.getString("amount") + "</td>");
+			if(custrep) {
+				out.print("<td style='word-wrap: break-word'><form action='DeleteBid.jsp'>");
+				out.print("<input type='hidden' name='bidID'  value='"+result.getString("bidID")+"'>");
+				out.print("<input type='submit' value='Delete Bid'/>");
+				out.print("</form></td>");
+			}
 			out.print("</tr>");
 		}
 		out.print("</table>");
