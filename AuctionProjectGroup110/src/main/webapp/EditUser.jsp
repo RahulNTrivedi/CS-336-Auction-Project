@@ -58,25 +58,29 @@
 		out.print("</table><br />");
 		
 		out.print("<form name='passInfo' method='post' action='ChangePass.jsp'>");
-        out.print("Password: <input type = 'text' name = 'password'><br /><br />");
+        out.print("Password: <input type = 'text' name = 'password' pattern='[a-zA-Z][a-zA-Z0-9-_.]{1,45}' maxLength='45' title='Only letters, numbers, hyphens, underscores, and periods. Must start with a letter. Size 1 to 45 characters'><br /><br />");
         out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
 		out.print("<input type='submit' value='Change Password'>");
 		out.print("</form><br />");
 		
 		out.print("<form name='emailInfo' method='post' action='ChangeEmail.jsp'>");
-		out.print("Email: <input type = 'text' name = 'email'><br /><br />");
+		out.print("Email: <input type = 'text' name = 'email' pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{0,45}$' maxLength='45' title='email@website.extension'><br /><br />");
 		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
 		out.print("<input type='submit' value='Change Email'>");
 		out.print("</form><br />");
 		
 		out.print("<form name='phoneInfo' method='post' action='ChangePhone.jsp'>");
-		out.print("Phone: <input type = 'text' name = 'phone'><br /><br />");
+		out.print("Phone: <input type = 'text' name = 'phone' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' maxLength='15' title='111-111-1111'><br /><br />");
 		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
 		out.print("<input type='submit' value='Change Phone'>");
 		out.print("</form><br />");
 		
 		out.print("<form name='addressInfo' method='post' action='ChangeAddress.jsp'>");
-		out.print("Address: <input type = 'text' name = 'address'><br /><br />");
+		out.print("Address:<br /><input type = 'text' name = 'address' placeholder= 'Street' pattern = '[a-zA-z0-9 ]{0,33}' maxLength='33' title ='Only letters and numbers. Max length 33'><br /><br />");
+		out.print("<input type = 'text' name = 'city' placeholder= 'City' pattern = '[a-zA-z ]{0,33}' maxLength='33' title ='Only letters. Max length 33'><br /><br />");
+		out.print("<input type = 'text' name = 'state' placeholder= 'State' pattern = '[a-zA-z ]{2}' maxLength='2' title ='Only letters. Use 2 letter abreviation'><br /><br />");
+		out.print("<input type = 'text' name = 'zip' placeholder= 'Zip' pattern = '[0-9]{5}' maxLength='5' title ='Enter a 5 digit number'><br /><br />");
+		out.print("<input type = 'text' name = 'country' placeholder= 'Country' pattern = '[a-zA-z ]{0,33}' maxLength='33' title ='Only letters. Max length 33'><br /><br />");
 		out.print("<input type='hidden' name='username'  value='"+result.getString("username")+"'>");
 		out.print("<input type='submit' value='Change Address'>");
 		out.print("</form><br />");

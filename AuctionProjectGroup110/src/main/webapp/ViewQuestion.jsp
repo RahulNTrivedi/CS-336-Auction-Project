@@ -60,7 +60,7 @@
 		
 		if(result.getByte("isStaff") == 1 && result.getByte("isAdmin") == 0){
 			out.print("<form name='replyInfo' method='post' action='WriteReply.jsp'>");
-	        out.print("Reply: <input type = 'text' name = 'reply'><br /><br />");
+	        out.print("Reply: <input type = 'text' name = 'reply' maxLength='1000' title='Reply must be less than 1000 characters'><br /><br />");
 	        out.print("<input type='hidden' name='questionID'  value='"+id+"'>");
 			out.print("<input type='submit' value='Reply'>");
 			out.print("</form><br />");
