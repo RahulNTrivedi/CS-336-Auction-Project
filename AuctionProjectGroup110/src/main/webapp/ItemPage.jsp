@@ -51,7 +51,7 @@
 		out.print("<h4>" + result.getString("h.condition") + "</h4>");
 		
 		String type = "";
-		out.print("<h1 style='line-height:0.4'>");
+		out.print("<h1 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 		if(result.getString("h.itemType").equals("textbook")){
 			type = "textbook";
 			str = "SELECT * FROM textbook AS t WHERE t.auctionID = '" + id + " ';";
@@ -100,14 +100,16 @@
 		
 		out.print("<br>");
 		
-		if(!result.getBoolean("isClosed") && !session.getAttribute("user").equals(owner)){
-			out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
-			out.print("<h2>Make a bid</h2>");
-			out.print("<form method='get' action='MakeBid.jsp'>");
-			out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
-			out.print("<input type='submit' value='Make bid'>");
-			out.print("</form>");
-			out.print("</div>");
+		if(!result.getBoolean("isClosed")){
+			if(!session.getAttribute("user").equals(owner)){
+				out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
+				out.print("<h2>Make a bid</h2>");
+				out.print("<form method='get' action='MakeBid.jsp'>");
+				out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+				out.print("<input type='submit' value='Make bid'>");
+				out.print("</form>");
+				out.print("</div>");
+			}
 		} else {
 			out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 			out.print("<h2>Bidding closed</h2>");
@@ -194,9 +196,9 @@
 			str = "select * from calculator where brand = '" + t1 + "' or model = '" + t2 + "';";
 			result = stmt.executeQuery(str);
 			while(result.next()){
-				out.print("<div style='width:200px; height: 150px; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
-				out.print("<h5 style='line-height:0.4'>" + result.getString("condition") + "</h5>");
-				out.print("<h2 style='line-height:0.4'>");
+				out.print("<div style='width:200px; height: auto; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
+				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + result.getString("condition") + "</h5>");
+				out.print("<h2 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 					out.print(result.getString("brand"));
 					out.print("&nbsp;");
 					out.print(result.getString("model"));

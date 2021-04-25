@@ -24,10 +24,20 @@
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
 		//Get parameters from the HTML form at the HelloWorld.jsp
-		String id = request.getParameter("address");
 		String username = request.getParameter("username");
 		
-		PreparedStatement ps = con.prepareStatement("UPDATE account SET address ='"+ id +"' WHERE username='"+username+"';");
+		String street = request.getParameter("address");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String zip = request.getParameter("zip");
+		String country = request.getParameter("country");
+		String address = street;
+		if(!city.equals("")) address += ", " + city;
+		if(!state.equals("")) address += ", " + state;
+		if(!zip.equals("")) address += ", " + zip;
+		if(!country.equals("")) address += ", " + country;
+		
+		PreparedStatement ps = con.prepareStatement("UPDATE account SET address ='"+ address +"' WHERE username='"+username+"';");
 		ps.executeUpdate();
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();

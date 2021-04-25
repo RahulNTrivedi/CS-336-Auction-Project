@@ -33,10 +33,8 @@
 		ResultSet result = stmt.executeQuery(str);
 		result.next();
 		
-		String type = "";
 		out.print("<h1 style='line-height:0.4'>");
 		if(result.getString("h.itemType").equals("textbook")){
-			type = "textbook";
 			str = "SELECT * FROM textbook AS t WHERE t.auctionID = '" + id + " ';";
 			ResultSet itemDetails = stmt.executeQuery(str);
 			itemDetails.next();
@@ -44,7 +42,6 @@
 			out.print("&nbsp;");
 			out.print(itemDetails.getString("t.author"));
 		} else if(result.getString("h.itemType").equals("notebook")){
-			type = "notebook";
 			str = "SELECT * FROM notebook AS n WHERE n.auctionID = '" + id + " ';";
 			ResultSet itemDetails = stmt.executeQuery(str);
 			itemDetails.next();
@@ -52,7 +49,6 @@
 			out.print("&nbsp;");
 			out.print(itemDetails.getString("n.name"));
 		} else if(result.getString("h.itemType").equals("calculator")){
-			type = "calculator";
 			str = "SELECT * FROM calculator AS c WHERE c.auctionID = '" + id + " ';";
 			ResultSet itemDetails = stmt.executeQuery(str);
 			itemDetails.next();
