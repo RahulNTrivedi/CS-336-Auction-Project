@@ -178,6 +178,10 @@
 					}
 				}
 				
+				if(searchedItems.getBoolean("a.isClosed")){
+					continue;
+				}
+				
 				out.print("<div style='width: 300px; height: auto; border: 1px solid black; padding:20px ; margin: 5px; float: left'>");
 				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + searchedItems.getString("h.itemType") + "</h5>");
 				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>Condition: " + searchedItems.getString("h.condition") + "</h5>");
@@ -197,11 +201,9 @@
 				}
 				out.print("</h2>");
 				out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>User: " + searchedItems.getString("a.accountUser") + "</h4>");
-				if(!searchedItems.getBoolean("a.isClosed")){
-					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Open</h4>");
-				} else {
-					out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Closed</h4>");
-				}
+
+				out.print("<h4 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'> Status: Current max bid = " + searchedItems.getString("a.maxBid") + "</h4>");
+
 				out.print("<form method='get' action='ItemPage.jsp'>");
 				out.print("<input type='hidden' name='auctionID' value='" + searchedItems.getString("a.auctionID") +"'>");
 				out.print("<input type='submit' value='View'>");
