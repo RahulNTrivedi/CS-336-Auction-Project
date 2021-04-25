@@ -196,7 +196,7 @@
 			str = "select * from calculator where brand = '" + t1 + "' or model = '" + t2 + "';";
 			result = stmt.executeQuery(str);
 			while(result.next()){
-				out.print("<div style='width:200px; height: auto; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
+				out.print("<div style='width:200px; height: 300px; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
 				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + result.getString("condition") + "</h5>");
 				out.print("<h2 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 					out.print(result.getString("brand"));
