@@ -51,7 +51,7 @@
 		out.print("<h4>" + result.getString("h.condition") + "</h4>");
 		
 		String type = "";
-		out.print("<h1 style=''>");
+		out.print("<h1 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 		if(result.getString("h.itemType").equals("textbook")){
 			type = "textbook";
 			str = "SELECT * FROM textbook AS t WHERE t.auctionID = '" + id + " ';";
@@ -197,8 +197,8 @@
 			result = stmt.executeQuery(str);
 			while(result.next()){
 				out.print("<div style='width:200px; height: 150px; border: 1px solid black; padding:5px ; margin: 5px; float: left'>");
-				out.print("<h5 style='line-height:0.4'>" + result.getString("condition") + "</h5>");
-				out.print("<h2 style='line-height:0.4'>");
+				out.print("<h5 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>" + result.getString("condition") + "</h5>");
+				out.print("<h2 style='overflow-wrap:break-word; word-wrap: break-word; hyphens: auto;'>");
 					out.print(result.getString("brand"));
 					out.print("&nbsp;");
 					out.print(result.getString("model"));
