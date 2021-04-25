@@ -429,12 +429,71 @@ DELIMITER ;
 -- used to see whether the event is running and when it last ran
 -- SELECT * FROM INFORMATION_SCHEMA. events;
 
+INSERT INTO `account` VALUES ('test', 'test', 'test@gmail.com', '908-999-9999', '44 Test Ave City NJ 08830 USA', 0, 0, 1, 1), 
+	('archi', 'archi', 'archi@gmail.com', '908-999-9999', '44 Test Ave City NJ 08830 USA', 0, 0, 1, 1), 
+    ('david', 'david', 'test@gmail.com', '908-999-9999', '44 Test Ave City NJ 08830 USA', 0, 0, 1, 1), 
+    ('rahul', 'rahul', 'test@gmail.com', '908-999-9999', '44 Test Ave City NJ 08830 USA', 0, 0, 1, 1), 
+	('johnathan', 'johnathan', 'test@gmail.com', '908-999-9999', '44 Test Ave City NJ 08830 USA', 0, 0, 1, 1); 
 
 
+insert into asksquestion values (1, "test", "Question?");
+insert into writesreplies values (1, "custrep", 1, "Answer");
+
+insert into itemsofinterest values ('biology', 'Campbell', 'admin', 'textbook');
+
+# Auction
+insert into auction values (1, "custrep", 0, null, '2021-5-11 00:00:00',10,0);
+insert into auction values (2, "custrep", 0, null, '2021-6-11 00:00:00',5,0);
+insert into auction values (3, "custrep", 0, null, '2021-7-11 00:00:00',5,0);
+insert into auction values (4, "custrep", 0, null, '2021-8-11 00:00:00',6,0);
+insert into auction values (5, "admin", 0, null, '2021-9-11 00:00:00',15,0);
+insert into auction values (6, "admin", 0, null, '2021-10-11 00:00:00',12,0);
+insert into auction values (7, "admin", 0, null, '2021-11-11 00:00:00',11,0);
+insert into auction values (8, "admin", 0, null, '2021-12-11 00:00:00',11,0);
+insert into auction values (9, "admin", 0, null, '2021-12-30 00:00:00',11,0);
+
+# Calculator
+insert into calculator values ("calculator", 1, "new", "TI", "89");
+insert into calculator values ("calculator", 2, "used", "TI", "89");
+insert into calculator values ("calculator", 3, "old", "CASIO", "100");
+
+# Textbook
+insert into textbook values ("textbook", 4, "new", "Intro Physics", "Rahul Trivedi");
+insert into textbook values ("textbook", 5, "used", "Advanced Mathematics", "Rahul Trivedi");
+insert into textbook values ("textbook", 6, "old", "Writing 101", "Rahul Trivedi");
+
+# Notebook
+insert into notebook values ("notebook", 7, "new", "blue", "composition notebook");
+insert into notebook values ("notebook", 8, "used", "red", "drawing notepad");
+insert into notebook values ("notebook", 9, "old", "green", "planner");
 
 
-   
-   
+# School Supplies
+insert into hasa_schoolsupply values (1, "calculator", "new");
+insert into hasa_schoolsupply values (2, "calculator", "used");
+insert into hasa_schoolsupply values (3, "calculator", "old");
+insert into hasa_schoolsupply values (4, "textbook", "new");
+insert into hasa_schoolsupply values (5, "textbook", "used");
+insert into hasa_schoolsupply values (6, "textbook", "old");
+insert into hasa_schoolsupply values (7, "notebook", "new");
+insert into hasa_schoolsupply values (8, "notebook", "used");
+insert into hasa_schoolsupply values (9, "notebook", "old");
+
+
+# makesBid
+insert into makesbid values (1, "rahul", 1, "manual", 9, null, null);
+insert into makesbid values (2, "archi", 1, "automatic", 10, 2, 30);
+insert into makesbid values (3, "david", 2, "manual", 5, null, null);
+insert into makesbid values (4, "archi", 3, "automatic", 5, 2, 30);
+insert into makesbid values (5, "rahul", 4, "automatic", 6, 2, 30);
+insert into makesbid values (6, "david", 5, "automatic", 10, 2, 30);
+insert into makesbid values (7, "rahul", 5, "automatic", 12, 2, 30);
+insert into makesbid values (8, "david", 5, "automatic", 15, 2, 30);
+insert into makesbid values (9, "david", 6, "automatic", 12, 2, 30);
+insert into makesbid values (10, "rahul", 7, "manual", 11, null, null);
+insert into makesbid values (11, "archi", 8, "manual", 11, null, null);
+insert into makesbid values (12, "archi", 9, "manual", 11, null, null);
+
 
 
 
