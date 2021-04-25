@@ -84,7 +84,7 @@
 				String lastBidUser = username;
 
 				String query = "SELECT * FROM makesbid WHERE amount in (SELECT max FROM (SELECT m.accountUser, max(amount) max FROM makesbid m, auction a WHERE m.typeOfBidding = 'automatic' AND m.auctionID = "
-						+id+ " AND a.auctionID = " +id+ " AND " +lastBidInserted+ " + m.increment <= m.upperLimit " + "GROUP BY accountUser) temp);";
+						+id+ " AND a.auctionID = " +id+ " AND " +lastBidInserted+ " + m.increment <= m.upperLimit " + "GROUP BY accountUser) temp) AND auctionID = "+id+";";
 				ResultSet autobidUsers = stmt.executeQuery(query);
 				ArrayList<String[]> autoBids = new ArrayList<String[]>();
 				while(autobidUsers.next()) {
