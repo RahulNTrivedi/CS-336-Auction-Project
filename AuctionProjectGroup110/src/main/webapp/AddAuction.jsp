@@ -36,7 +36,8 @@
 		String calcModel = request.getParameter("calcModel");
 		
 		String closeDate = request.getParameter("closedate");
-		int reserve = Integer.parseInt(request.getParameter("reserve"));
+		
+		int reserve = request.getParameter("reserve").length() == 0? 0 : Integer.parseInt(request.getParameter("reserve"));
 		
 		//create Date from input
 		int year = Integer.parseInt(closeDate.substring(0,4)) - 1900;

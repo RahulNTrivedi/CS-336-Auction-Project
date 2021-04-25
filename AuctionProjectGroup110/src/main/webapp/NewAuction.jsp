@@ -123,7 +123,7 @@
 		</tr>
 		<tr>
 			<td>
-				<input type="number" name="reserve" min="0.01" step="0.01" max="2500" required="required" >
+				<input type="number" name="reserve" min="1" step="1" max="2500"" >
 			</td>
 		</tr>
 		</table>
