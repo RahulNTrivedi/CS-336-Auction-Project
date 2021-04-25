@@ -451,21 +451,29 @@ insert into auction values (6, "admin", 0, null, '2021-10-11 00:00:00',12,0);
 insert into auction values (7, "admin", 0, null, '2021-11-11 00:00:00',11,0);
 insert into auction values (8, "admin", 0, null, '2021-12-11 00:00:00',11,0);
 insert into auction values (9, "admin", 0, null, '2021-12-30 00:00:00',11,0);
+insert into auction values (10, "admin", 0, "david", '2020-12-30 00:00:00',100,1);
+insert into auction values (11, "custrep", 0, "archi", '2020-12-30 00:00:00',300,1);
+insert into auction values (12, "admin", 0, "rahul", '2020-12-30 00:00:00',500,1);
+insert into auction values (13, "admin", 0, "rahul", '2020-12-30 00:00:00',500,1);
 
 # Calculator
 insert into calculator values ("calculator", 1, "new", "TI", "89");
 insert into calculator values ("calculator", 2, "used", "TI", "89");
 insert into calculator values ("calculator", 3, "old", "CASIO", "100");
+insert into calculator values ("calculator", 10, "new", "TI", "89");
+insert into calculator values ("calculator", 11, "used", "TI", "89");
 
 # Textbook
 insert into textbook values ("textbook", 4, "new", "Intro Physics", "Rahul Trivedi");
 insert into textbook values ("textbook", 5, "used", "Advanced Mathematics", "Rahul Trivedi");
 insert into textbook values ("textbook", 6, "old", "Writing 101", "Rahul Trivedi");
+insert into textbook values ("textbook", 12, "old", "Writing 101", "Rahul Trivedi");
 
 # Notebook
 insert into notebook values ("notebook", 7, "new", "blue", "composition notebook");
 insert into notebook values ("notebook", 8, "used", "red", "drawing notepad");
 insert into notebook values ("notebook", 9, "old", "green", "planner");
+insert into notebook values ("notebook", 13, "old", "green", "planner");
 
 
 # School Supplies
@@ -478,6 +486,11 @@ insert into hasa_schoolsupply values (6, "textbook", "old");
 insert into hasa_schoolsupply values (7, "notebook", "new");
 insert into hasa_schoolsupply values (8, "notebook", "used");
 insert into hasa_schoolsupply values (9, "notebook", "old");
+insert into hasa_schoolsupply values (10, "calculator", "new");
+insert into hasa_schoolsupply values (11, "calculator", "used");
+insert into hasa_schoolsupply values (12, "textbook", "old");
+insert into hasa_schoolsupply values (13, "notebook", "old");
+
 
 
 # makesBid
