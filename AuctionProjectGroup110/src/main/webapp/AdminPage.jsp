@@ -325,7 +325,7 @@
 				out.print("</table>");
 				
 				out.print("<h2>Earnings per End User: </h2>");
-				str = "SELECT winner username, SUM(maxBid) earnings FROM auction WHERE winner IS NOT null GROUP BY winner;";
+				str = "SELECT winner username, SUM(maxBid) earnings FROM auction WHERE winner IS NOT null AND winner IN (SELECT username FROM account WHERE isStaff = 0) GROUP BY winner;";
 				result = stmt.executeQuery(str);
 				
 				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
@@ -342,24 +342,24 @@
 				out.print("</table>");
 				
 				out.print("<h2>Best Buyers: </h2>");
-				str = "SELECT winner username, SUM(maxBid) earnings FROM auction WHERE winner IS NOT null GROUP BY winner ORDER BY earnings DESC LIMIT 5;";
+				str = "SELECT winner username, COUNT(*) wins FROM auction WHERE winner IS NOT null GROUP BY winner ORDER BY wins DESC LIMIT 5;";
 				result = stmt.executeQuery(str);
 				
 				out.print("<table border='1' cellpadding='5' style='table-layout: fixed; width:100%;'>");
 				out.print("<tr>");
 				out.print("<th style='word-wrap: break-word; width:20%'>Username</th>");
-				out.print("<th style='word-wrap: break-word; width:20%'>Earnings</th>");
+				out.print("<th style='word-wrap: break-word; width:20%'>Wins</th>");
 				out.print("</tr>");
 				while(result.next() && result.getString("username") != null){
 					out.print("<tr>");
 					out.print("<td style='word-wrap: break-word'>" + result.getString("username") + "</td>");
-					out.print("<td style='word-wrap: break-word'>" + result.getString("earnings") + "</td>");
+					out.print("<td style='word-wrap: break-word'>" + result.getString("wins") + "</td>");
 					out.print("</tr>");
 				}
 				out.print("</table>");
 				
 				out.print("<h2>Best Selling Items: </h2>");
-				str = "SELECT items.auctionID, items.author, items.title, items.brand, items.model, items.color, items.name, maxVal.max as earnings FROM (SELECT a.auctionID, t.author, t.title, c.brand, c.model, n.color, n.name FROM hasa_schoolsupply a LEFT JOIN textbook AS t ON a.auctionID = t.auctionID LEFT JOIN calculator AS c ON a.auctionID = c.auctionID LEFT JOIN notebook AS n ON a.auctionID = n.auctionID) AS items, (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS maxVal WHERE maxVal.auctionID = items.auctionID ORDER BY earnings DESC LIMIT 5;";
+				str = "SELECT items.auctionID, items.author, items.title, items.brand, items.model, items.color, items.name, SUM(maxVal.max) as earnings FROM (SELECT a.auctionID, t.author, t.title, c.brand, c.model, n.color, n.name FROM hasa_schoolsupply a LEFT JOIN textbook AS t ON a.auctionID = t.auctionID LEFT JOIN calculator AS c ON a.auctionID = c.auctionID LEFT JOIN notebook AS n ON a.auctionID = n.auctionID) AS items, (SELECT a.auctionID, a.maxBid max FROM auction a WHERE winner IS NOT null) AS maxVal WHERE maxVal.auctionID = items.auctionID GROUP BY items.author, items.title, items.brand, items.model, items.color, items.name ORDER BY earnings DESC LIMIT 5;";
 				result = stmt.executeQuery(str);
 				int x = 1;
 				while(result.next() && result.getString("earnings") != null){
