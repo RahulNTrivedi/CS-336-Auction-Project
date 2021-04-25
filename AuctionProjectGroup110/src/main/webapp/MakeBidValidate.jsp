@@ -161,7 +161,7 @@
 				
 				String notifyManualUsers = "SELECT DISTINCT(m.accountUser) FROM makesbid m WHERE m.accountUser NOT IN (" +
 					"SELECT m.accountUser FROM makesbid m, auction a WHERE a.auctionID = " +id+
-					" AND a.auctionID = m.auctionID AND m.amount = a.maxBid) AND typeOfBidding = 'manual';";
+					" AND a.auctionID = m.auctionID AND m.amount = a.maxBid) AND typeOfBidding = 'manual' AND m.auctionID =" +id+ ";";
 				ResultSet notifyManual = stmt.executeQuery(notifyManualUsers);
 				while(notifyManual.next()) {
 					String insertAlert = "INSERT INTO alerts VALUES('A higher bid has been placed on " +itemName+ " at $" +lastBidInserted+ "', '" +notifyManual.getString(1)+ "');";
@@ -171,7 +171,7 @@
 				
 				String notifyAutoUsers = "SELECT DISTINCT(m.accountUser) FROM makesbid m WHERE m.accountUser NOT IN (" +
 					"SELECT m.accountUser FROM makesbid m, auction a WHERE a.auctionID = " +id+
-					" AND a.auctionID = m.auctionID AND m.amount = a.maxBid) AND typeOfBidding = 'automatic';";
+					" AND a.auctionID = m.auctionID AND m.amount = a.maxBid) AND typeOfBidding = 'automatic' AND m.auctionID =" +id+ ";";
 				ResultSet notifyAuto = stmt2.executeQuery(notifyAutoUsers);
 				while(notifyAuto.next()) {
 					String insertAlert = "INSERT INTO alerts VALUES('Your upper limit has been outbid on " +itemName+ " at $" +lastBidInserted+ "', '" +notifyAuto.getString(1)+ "');";
