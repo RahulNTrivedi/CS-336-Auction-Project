@@ -54,7 +54,7 @@
 		</tr>
 		<tr>
 		
-		<td>Color (notebook)</td>
+		<td>Notebook Color (type NA if not notebook)</td>
 		</tr>
 		<tr>
 			<td>
@@ -62,7 +62,7 @@
 			</td>
 		</tr>
 		<tr>
-		<td>Name (notebook)</td>
+		<td>Notebook Name (type NA if not notebook)</td>
 		</tr>
 		<tr>
 			<td>
@@ -71,7 +71,7 @@
 		</tr>
 		<tr>
 		
-		<td>Title (textbook)</td>
+		<td>Textbook Title (type NA if not textbook)</td>
 		</tr>
 		<tr>
 			<td>
@@ -79,7 +79,7 @@
 			</td>
 		</tr>
 		<tr>
-		<td>Author (textbook)</td>
+		<td>Textbook Author (type NA if not textbook)</td>
 		</tr>
 		<tr>
 			<td>
@@ -88,7 +88,7 @@
 		</tr>
 		<tr>
 		
-		<td>Brand (calculator)</td>
+		<td>Calculator Brand (type NA if not calculator)</td>
 		</tr>
 		<tr>
 			<td>
@@ -96,7 +96,7 @@
 			</td>
 		</tr>
 		<tr>
-		<td>Model (calculator)</td>
+		<td>Calculator Model (type NA if not calculator)</td>
 		</tr>
 		<tr>
 			<td>
@@ -106,7 +106,7 @@
 		<tr>
 		
 		
-		<td>Closing Date</td>
+		<td>Closing Date (Format YYYY-MM-DD hh:mm:ss)</td>
 		</tr>
 		<tr>
 			<td>
