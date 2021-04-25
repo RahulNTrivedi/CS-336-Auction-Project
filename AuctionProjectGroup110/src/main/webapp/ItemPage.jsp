@@ -51,7 +51,7 @@
 		out.print("<h4>" + result.getString("h.condition") + "</h4>");
 		
 		String type = "";
-		out.print("<h1 style='line-height:0.4'>");
+		out.print("<h1 style=''>");
 		if(result.getString("h.itemType").equals("textbook")){
 			type = "textbook";
 			str = "SELECT * FROM textbook AS t WHERE t.auctionID = '" + id + " ';";
