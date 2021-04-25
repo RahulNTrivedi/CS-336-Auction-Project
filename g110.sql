@@ -363,6 +363,20 @@ UNLOCK TABLES;
 
 -- Dump completed on 2021-03-23 16:59:25
 
+drop function if exists generateMessage;
+
+DELIMITER //
+CREATE FUNCTION generateMessage(auction int) RETURNS varchar(250) DETERMINISTIC
+BEGIN
+	return CONCAT('Congrats, you won auction number ', auction);
+END 
+//
+DELIMITER ;
+
+
+
+DROP EVENT if exists `close_auction`;
+
 DELIMITER $$
 
 CREATE 
@@ -411,13 +425,7 @@ CREATE
 
 DELIMITER ;      
 
-DELIMITER //
-CREATE FUNCTION generateMessage(auction int) RETURNS varchar(250) DETERMINISTIC
-BEGIN
-	return CONCAT('Congrats, you won auction number ', auction);
-END 
-//
-DELIMITER ;
+
 -- used to see whether the event is running and when it last ran
 -- SELECT * FROM INFORMATION_SCHEMA. events;
 
