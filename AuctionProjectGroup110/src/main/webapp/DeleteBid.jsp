@@ -33,7 +33,7 @@
 		result.next();
 		
 		if(result.getString("maxVal") == null){
-			PreparedStatement ps2 = con.prepareStatement("UPDATE auction SET maxBid = null WHERE auctionID ="+ auctionid+";");
+			PreparedStatement ps2 = con.prepareStatement("UPDATE auction SET maxBid = 0 WHERE auctionID ="+ auctionid+";");
 			ps2.executeUpdate();
 		} else {
 			int maxVal = Integer.parseInt(result.getString("maxVal"));
