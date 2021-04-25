@@ -44,9 +44,6 @@
 			<form name="faqForm" method="post">
 				<input type="button" value="FAQ" onclick="setBtn('faq')">
 			</form>
-			<form name="usersForm" method="post">
-				<input type="button" value="Users" onclick="setBtn('users')">
-			</form>
 			<form name="saleReportForm" method="post">
 				<input type="button" value="Sale Report" onclick="setBtn('salesReport')">
 			</form>
@@ -232,47 +229,6 @@
 						out.print("</tr>");
 					}
 				}
-				
-				out.print("</table>");
-				
-				con.close();
-			} catch (Exception ex) {
-				out.print(ex);
-				out.print("Failed");
-			}
-		} else if(request.getParameter("type") != null && ((String)request.getParameter("type")).equals("users")){
-			try {
-				//Get the database connection
-				ApplicationDB db = new ApplicationDB();	
-				Connection con = db.getConnection();
-				
-				Statement stmt = con.createStatement();
-				String str = "SELECT * FROM account WHERE isStaff = 0;";
-				ResultSet result = stmt.executeQuery(str);
-		
-				out.print("<h4>View Users</h4>");
-				
-				out.print("<form name='userForm' method='post'>");
-				out.print("<input id='searchQueryUser' type='text'>");
-				out.print("<input type='hidden' name='userSearch'>");
-				out.print("<input type='button' value='Search' onclick='setUserSearch()'>");
-				out.print("</form>");
-				
-				out.print("<table'>");
-				while(result.next()){
-					if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")
-							|| (result.getString("username")).toLowerCase().contains((String) request.getParameter("userSearch"))){
-						out.print("<tr>");
-						//make a column
-						out.print("<form method='get' action='EditUser.jsp'>");
-						out.print("<input type='hidden' value='" + result.getString("username") + "' name='username'>");
-						out.print("<input type='submit' value='" + result.getString("username") + "'>");
-						
-						out.print("</form>");
-						out.print("</tr>");
-					}
-				}
-	
 				
 				out.print("</table>");
 				

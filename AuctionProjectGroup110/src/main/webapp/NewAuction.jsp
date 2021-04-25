@@ -25,17 +25,6 @@
 		<h1>Create Auction</h1>
 		<form method="post" action="AddAuction.jsp">
 		<table>
-		<tr>    
-			<td>Item Name</td>
-		</tr>
-		<tr>
-			<td>
-				<input 
-					type="text" 
-					name="itemname"
-					required = "required">
-			</td>
-		</tr>
 		<tr>
 		<td>Condition</td>
 		</tr>

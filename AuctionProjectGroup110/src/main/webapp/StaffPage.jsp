@@ -47,12 +47,6 @@
 			<form name="usersForm" method="post">
 				<input type="button" value="Users" onclick="setBtn('users')">
 			</form>
-			<form name="saleReportForm" method="post">
-				<input type="button" value="Sale Report" onclick="setBtn('salesReport')">
-			</form>
-			<form name="createAccountForm" method="post">
-				<input type="button" value="Create Account" onclick="setBtn('createAccount')">
-			</form>
 		</tr>
 	</table>
 	
@@ -71,57 +65,25 @@
 					String str =  "SELECT * FROM account WHERE username = '" + session.getAttribute("user") + "';";
 		
 					ResultSet result = stmt.executeQuery(str);
+					result.next();
+					
 					out.print("<h4>User Info</h4>");
 					
-					out.print("<table>");
-		
-					//make a row
-					out.print("<tr>");
-					//make a column
-					out.print("<td>");
-					//print out column header
-					out.print("Username");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Email");
-					out.print("</td>");
-					//make a column
-					out.print("<td>");
-					out.print("Phone");
-					out.print("</td>");
-					out.print("<td>");
-					out.print("Address");
-					out.print("</td>");
-					out.print("</tr>");
-		
-					//parse out the results
-					while (result.next()) {
-						//make a row
-						out.print("<tr>");
-						//make a column
-						out.print("<td>");
-						//Print out current username:
-						out.print(result.getString("username"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current email:
-						out.print(result.getString("email"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current phone
-						out.print(result.getString("phone"));
-						out.print("</td>");
-						out.print("<td>");
-						//Print out current address
-						out.print(result.getString("address"));
-						out.print("</td>");
-						out.print("</tr>");
-		
-					} 
+					out.print("<h4>Username</h4>");
+					out.print("<p>" + result.getString("username") + "</p>");
 					
-					out.print("</table>");
-		
+					out.print("<h4>Password</h4>");
+					out.print("<p>" + result.getString("password") + "</p>");
+					
+					out.print("<h4>Email</h4>");
+					out.print("<p>" + result.getString("email") + "</p>");
+					
+					out.print("<h4>Phone</h4>");
+					out.print("<p>" + result.getString("phone") + "</p>");
+					
+					out.print("<h4>Address</h4>");
+					out.print("<p>" + result.getString("address") + "</p>");
+
 				//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 				con.close();
 		
@@ -139,6 +101,32 @@
 		
 				out.print("<h4>My Bids</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a, makesbid m WHERE a.auctionID=m.auctionID AND m.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("<td>");
+				out.print("Amount");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("<td>");
+					out.print(result.getString("m.amount"));
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -152,6 +140,25 @@
 		
 				out.print("<h4>My Auctions</h4>");
 				
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery("SELECT * FROM auction a WHERE a.accountUser='" + session.getAttribute("user") + "';");
+				out.print("<table>");
+				out.print("<tr>");
+				out.print("<td>");
+				out.print("Auction");
+				out.print("</td>");
+				out.print("</tr>");
+				while(result.next()){
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<form method='get' action='ItemPage.jsp'>");
+					out.print("<input type='hidden' name='auctionID' value='" + result.getString("a.auctionID") +"'>");
+					out.print("<input type='submit' value='View'>");
+					out.print("</form>");
+					out.print("</td>");
+					out.print("</tr>");
+				}
+				out.print("</table>");
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -162,8 +169,25 @@
 				//Get the database connection
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
-		
+				
+				Statement stmt = con.createStatement();
+				String str = "SELECT * FROM asksquestion WHERE endUsername='" + session.getAttribute("user") + "';";
+				ResultSet result = stmt.executeQuery(str);
+	
 				out.print("<h4>My Questions</h4>");
+				//parse out the results
+				while (result.next()) {
+					//make a row
+					out.print("<tr>");
+					//make a column
+					out.print("<form method='get' action='ViewQuestion.jsp'>");
+					out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
+					out.print("<input type='submit' value='" + result.getString("questionDetails") + "'>");
+					
+					out.print("</form>");
+					out.print("</tr>");
+	
+				} 				
 				
 				con.close();
 			} catch (Exception ex) {
@@ -176,6 +200,10 @@
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
 				
+				Statement stmt = con.createStatement();
+				String str = "SELECT * FROM asksquestion;";
+				ResultSet result = stmt.executeQuery(str);
+				
 				out.print("<h4>View Questions</h4>");
 				
 				out.print("<form name='faqForm' method='post'>");
@@ -184,7 +212,23 @@
 				out.print("<input type='button' value='Search' onclick='setFaqSearch()'>");
 				out.print("</form>");
 				
-				out.print((String)request.getParameter("faqSearch"));
+				out.print("<table'>");
+				while(result.next()){
+					if(request.getParameter("faqSearch") == null || ((String) request.getParameter("faqSearch")).equals("")
+							|| (result.getString("endUsername") + " " + result.getString("questionDetails")).toLowerCase().contains((String) request.getParameter("faqSearch"))){
+						out.print("<tr>");
+						//make a column
+						out.print("<form method='get' action='ViewQuestion.jsp'>");
+						out.print("<input type='hidden' value='" + result.getString("questionID") + "' name='questionID'>");
+						out.print("<input type='submit' value='" + result.getString("endUsername") + ": " + result.getString("questionDetails") + "'>");
+						
+						out.print("</form>");
+						out.print("</tr>");
+					}
+				}
+				
+				out.print("</table>");
+				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
@@ -195,6 +239,10 @@
 				//Get the database connection
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
+				
+				Statement stmt = con.createStatement();
+				String str = "SELECT * FROM account WHERE isStaff = 0;";
+				ResultSet result = stmt.executeQuery(str);
 		
 				out.print("<h4>View Users</h4>");
 				
@@ -204,26 +252,30 @@
 				out.print("<input type='button' value='Search' onclick='setUserSearch()'>");
 				out.print("</form>");
 				
-				out.print((String)request.getParameter("userSearch"));
-				con.close();
-			} catch (Exception ex) {
-				out.print(ex);
-				out.print("Failed");
-			}
-		} else if(request.getParameter("type") != null && ((String)request.getParameter("type")).equals("salesReport")){
-			try {
-				//Get the database connection
-				ApplicationDB db = new ApplicationDB();	
-				Connection con = db.getConnection();
-		
-				out.print("<h4>Generate Sales Report</h4>");
+				out.print("<table'>");
+				while(result.next()){
+					if(request.getParameter("userSearch") == null || ((String) request.getParameter("userSearch")).equals("")
+							|| (result.getString("username")).toLowerCase().contains((String) request.getParameter("userSearch"))){
+						out.print("<tr>");
+						//make a column
+						out.print("<form method='get' action='EditUser.jsp'>");
+						out.print("<input type='hidden' value='" + result.getString("username") + "' name='username'>");
+						out.print("<input type='submit' value='" + result.getString("username") + "'>");
+						
+						out.print("</form>");
+						out.print("</tr>");
+					}
+				}
+	
+				
+				out.print("</table>");
 				
 				con.close();
 			} catch (Exception ex) {
 				out.print(ex);
 				out.print("Failed");
 			}
-		} 
+		}
     }
 	%>
 
