@@ -21,7 +21,7 @@
 		Statement stmt = con.createStatement();
 		Statement stmt2 = con.createStatement();
 
-		//Get parameters from the HTML form at the HelloWorld.jsp
+		//Get parameters
 		String username = (String) session.getAttribute("user");
 		String id = request.getParameter("auctionID");
 		String bidType = request.getParameter("bidType");

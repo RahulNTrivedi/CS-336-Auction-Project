@@ -22,6 +22,13 @@
 		</form>
 		<br>
 	
+		<%!
+		public void deleteQuery() {
+			return;
+		}
+		
+		%>
+		
 		<h1>Alerts</h1>
 		
 		<div style='border: 1px solid black; padding: 5px; margin: 5px'>
@@ -79,6 +86,20 @@
 						out.print("err");
 					}
 					out.print("<br>");
+				}
+				out.print("<h3>Other Alerts:</h3>");
+				String alertQuery = "SELECT * FROM alerts WHERE alertUsername = '" + session.getAttribute("user") + "';";
+				ResultSet alerts = stmt.executeQuery(alertQuery);
+				while(alerts.next()) {
+					out.print("<table>");
+					out.print("<tr>");
+					out.print("<form action='DeleteAlert.jsp'>");
+					out.print("<input type='hidden' name='alertMsg' value='" + alerts.getString("alertMsg") +"'>");
+					out.print("<input type='submit' value='Delete Alert'/>");
+					out.print("</form>");
+					out.print(alerts.getString("alertMsg"));
+					out.print("</tr>");
+					out.print("</table>");
 				}
 				
 				
