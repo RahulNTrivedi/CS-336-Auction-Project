@@ -38,8 +38,12 @@
 		ps.executeUpdate();
 		//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 		con.close();
-		out.print("Insert succeeded");
-		response.sendRedirect("MainPage.jsp");
+		out.print("Reply succeeded");
+		out.print("<form action='ViewQuestion.jsp'>");
+		out.print("<input type='hidden' name='questionID' value='" + id + "'>");
+		out.print("<input type='submit' value='Return'/>");
+		out.print("</form>");
+
 
 
 	} catch (Exception ex) {

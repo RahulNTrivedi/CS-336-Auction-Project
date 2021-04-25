@@ -19,30 +19,32 @@
 
 		//Create a SQL statement
 		Statement stmt = con.createStatement();
+		Statement stmt2 = con.createStatement();
 
 		out.print("<form action='MainPage.jsp'>");
 		out.print("<input type='submit' value='Home'/>");
 		out.print("</form>");
-		out.print("<button type='button' name='back' onclick='history.back()'>Back</button>");
+		
 		//Get parameters from the HTML form at the HelloWorld.jsp
 		String id = request.getParameter("auctionID");
 		
-		String str = "SELECT * FROM account;";
-		
+		String str = "SELECT * FROM auction AS a LEFT OUTER JOIN hasa_schoolsupply AS h ON a.auctionID = h.auctionID WHERE a.auctionID = '" + id + " ';";
 		ResultSet result = stmt.executeQuery(str);
 		result.next();
-		boolean custrep = result.getByte("isStaff") == 1 && result.getByte("isAdmin") == 0;
+		
+		String str2 = "SELECT * FROM account WHERE username ='" + session.getAttribute("user") + "';";
+		ResultSet result2 = stmt2.executeQuery(str2);
+		result2.next();
+		
+		String owner = result.getString("accountUser");
+		
+		boolean custrep = result2.getByte("isStaff") == 1 && result2.getByte("isAdmin") == 0 && result.getByte("isClosed") == 0;
 		if(custrep) {
 			out.print("<form action='DeleteAuction.jsp'>");
 			out.print("<input type='hidden' name='auctionID'  value='"+id+"'>");
 			out.print("<input type='submit' value='Delete Auction'/>");
 			out.print("</form>");
 		}
-		
-		str = "SELECT * FROM auction AS a LEFT OUTER JOIN hasa_schoolsupply AS h ON a.auctionID = h.auctionID WHERE a.auctionID = '" + id + " ';";
-		
-		result = stmt.executeQuery(str);
-		result.next();
 		
 		out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 		out.print("<h4>" + result.getString("h.itemType") + "</h4>");
@@ -98,7 +100,7 @@
 		
 		out.print("<br>");
 		
-		if(!result.getBoolean("isClosed")){
+		if(!result.getBoolean("isClosed") && !session.getAttribute("user").equals(owner)){
 			out.print("<div style='border: 1px solid black; padding: 5px; margin: 5px'>");
 			out.print("<h2>Make a bid</h2>");
 			out.print("<form method='get' action='MakeBid.jsp'>");
@@ -139,6 +141,7 @@
 			if(custrep) {
 				out.print("<td style='word-wrap: break-word'><form action='DeleteBid.jsp'>");
 				out.print("<input type='hidden' name='bidID'  value='"+result.getString("bidID")+"'>");
+				out.print("<input type='hidden' name='auctionID'  value='"+id+"'>");
 				out.print("<input type='submit' value='Delete Bid'/>");
 				out.print("</form></td>");
 			}
